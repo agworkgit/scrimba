@@ -40,3 +40,12 @@ World's most annoying cookie consent with the following features:
 
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/16_annoying_cookie_consent)<br>
 [To see the project in action click here](https://https://cookiehell-site.netlify.app)
+
+## Project 2
+
+A landing page for a space exploration company:
+
+![preview image](2_space_exploration/assets/preview.jpg)
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/2_space_exploration)<br>
+[To see the project in action click here](https://https://spaceex-gif.netlify.app)
