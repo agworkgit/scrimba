@@ -12,5 +12,5 @@ A restaurant menu ordering app with the following features:
 -   Show a total sum of all products in the cart.
 -   Modal to process payment.
 
-[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/18_ordering_app)<br>
-[To see the project in action click here](agscrimba-ordering.netlify.app)
+[To see the project code click here]('https://github.com/agworkgit/scrimba/tree/main/18_ordering_app')<br>
+[To see the project in action click here]('https://agscrimba-ordering.netlify.app')
