@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    font-family: 'Funnel Display', sans-serif;
+    color: white;
+}
+
+#wrapper {
+    background: rgb(11, 8, 154);
+    width: 60vw;
+    margin: 100px auto 0px auto;
+    border-radius: 20px;
+    border: 15px solid rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#scoreboard {
+    display: flex;
+}
+
+.title {
+    text-align: center;
+    font-size: 64px;
+    margin-bottom: 70px;
+}
+
+#home-counter {
+    text-align: center;
+    margin: 100px auto 0px auto;
+}
+
+#guest-counter {
+    text-align: center;
+    margin: 100px auto 0px auto;
+}
+
+.digit {
+    font-family: 'Doto', sans-serif;
+    color: #f43f5e;
+    font-size: 150px;
+    padding-left: 20px;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    width: 275px;
+    height: 275px;
+    border-radius: 5px;
+    margin: 0px 75px;
+    padding: 0px 0px 25px 0px;
+}
+
+span {
+    color: #f43f5e;
+    font-family: 'Doto', sans-serif;
+}
+
+#leader-board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    font-size: xx-large;
+    width: fit-content;
+    height: 50px;
+    border-radius: 8px;
+    cursor: pointer;
+    padding-inline: 30px;
+}
+
+.point-wrapper {
+    display: flex;
+    margin: 50px 0px;
+    justify-content: center;
+}
+
+.point-unit {
+    font-family: 'Doto', sans-serif;
+    font-size: 24px;
+    background: none;
+    border: 2px solid rgb(106, 166, 255);
+    color: rgb(106, 166, 255);
+    padding: 20px 15px;
+    margin: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#new-game {
+    color: black;
+    background: none;
+    font-size: xx-large;
+    font-family: 'Doto', sans-serif;
+    width: 300px;
+    height: 50px;
+    border: 2px solid rgb(106, 166, 255);
+    color: rgb(106, 166, 255);
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 25px auto 75px auto;
+}
+
+.point-unit:hover {
+    background: rgba(106, 106, 106, 0.5);
+    border: 2px solid rgb(174, 206, 255);
+    color: rgb(174, 206, 255);
+}
+
+#new-game:hover {
+    background: rgba(106, 106, 106, 0.5);
+    border: 2px solid rgb(174, 206, 255);
+    color: rgb(174, 206, 255);
+}

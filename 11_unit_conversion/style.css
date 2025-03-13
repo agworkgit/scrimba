@@ -1,0 +1,112 @@
+:root {
+    --purple: #6943ff;
+    --purple-soft: #b295ff;
+    --purple-dark: #5a537b;
+    --offwhite: #e7e5e5;
+    --white: #ffffff;
+    --dark-grey: #353535;
+    --title-font-size: 28px;
+    --digit-font-size: 42px;
+    --button-font-size: 16px;
+    --desc-title-font-size: 20px;
+    --desc-info-font-size: 14px;
+}
+
+::selection {
+    background: var(--purple-soft);
+}
+
+* {
+    margin: 0;
+    font-family: 'Funnel Display', sans-serif;
+}
+
+#wrapper {
+    background: var(--offwhite);
+    height: 729px;
+    width: 550px;
+    margin: 75px auto;
+}
+
+.wrapper-title {
+    font-size: var(--title-font-size);
+    color: var(--white);
+}
+
+#inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 285px;
+    background: var(--purple);
+}
+
+#user-input {
+    font-family: 'Funnel Display', sans-serif;
+    font-weight: 600;
+    color: var(--white);
+    font-size: var(--digit-font-size);
+    text-align: left;
+    width: 350px;
+    background: none;
+    margin-left: 10px;
+    border: none;
+    box-sizing: border-box;
+}
+
+#user-controls {
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+    height: 65px;
+    justify-content: space-around;
+    align-items: center;
+    border: 2px solid var(--purple-soft);
+    border-radius: 5px;
+}
+
+input:focus {
+    outline: none;
+}
+
+#user-btn {
+    font-size: var(--button-font-size);
+    background: var(--offwhite);
+    border: none;
+    width: 117px;
+    height: 42px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+#user-btn:hover {
+    background: var(--purple-soft);
+}
+
+#user-btn:active {
+    transform: scale(0.98);
+}
+
+.output {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--white);
+    margin: 25px auto;
+    border-radius: 5px;
+    width: 500px;
+    height: 110px;
+}
+
+.insert-title {
+    font-size: var(--desc-title-font-size);
+    color: var(--purple-dark);
+    text-align: center;
+    padding-bottom: 10px;
+}
+.insert-value {
+    font-size: var(--desc-info-font-size);
+    color: var(--purple-grey);
+    text-align: center;
+}

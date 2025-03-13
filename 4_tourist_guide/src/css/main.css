@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    font-family: 'Funnel Display', sans-serif;
+}
+
+body {
+    text-align: center;
+    background: rgb(82, 82, 82);
+}
+
+#hero {
+    display: flex;
+    flex-direction: column;
+}
+
+#hero-photo {
+    background-image: url('https://media.timeout.com/images/105234164/image.jpg');
+    display: flex;
+    width: auto;
+    height: 750px;
+    align-items: center;
+    background-size: cover;
+}
+
+#hero-info {
+    width: 700px;
+    position: absolute;
+    top: 17.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#hero-title {
+    padding: 20px;
+    color: lightsalmon;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: xx-large;
+}
+
+#hero-description {
+    padding: 20px;
+    color: rgb(190, 245, 255);
+    border-radius: 10px;
+    font-size: x-large;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+#carousel-title {
+    color: rgb(82, 82, 82);
+    width: 500px;
+    border-radius: 10px;
+    margin: 50px auto 50px auto;
+    font-size: xx-large;
+}
+
+#carousel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: rgb(190, 245, 255);
+}
+
+#carousel-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#carousel-item {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 50px;
+    color: rgb(82, 82, 82);
+}
+
+.carousel-item-title {
+    margin-block: 25px;
+}
+
+.carousel-img-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.carousel-img {
+    display: flex;
+    align-items: center;
+    border-radius: 100%;
+    background-size: cover;
+    width: 250px;
+    height: 250px;
+}
+
+#card-section {
+    background: rgb(82, 82, 82);
+    margin-bottom: 100px;
+}
+
+#guide-card {
+    background: lightsalmon;
+    padding: 50px;
+    display: flex;
+    flex-direction: row;
+    margin: 100px auto 50px auto;
+    width: 500px;
+    border-radius: 10px;
+}
+
+#guide-photo {
+    width: 200px;
+    border-radius: 10px;
+}
+
+#guide-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    margin-inline: 50px;
+}
+
+#guide-para {
+    margin-block: 30px;
+}

@@ -1,0 +1,92 @@
+/* @font-face {
+    src: url('../assets/Corleone.ttf');
+    font-family: Corleone;
+}
+
+h1 {
+    font-family: Corleone, sans-serif;
+}
+ */
+/* Consider using the newer font format WOFF2 */
+
+/* Don't use more than 2 to 3 different fonts, you'll take a performance hit */
+
+* {
+    margin: 0;
+}
+
+body {
+    /* background: linear-gradient(black, darkgrey); */
+    background: black;
+    color: white;
+    text-align: center;
+    font-family: 'Sofia Sans Semi Condensed', serif;
+    font-size: 24px;
+}
+
+#hero {
+    padding: 50px;
+    /* text-shadow: 0px 0px 2px whitesmoke; */
+}
+
+#main-logo {
+    margin-bottom: 50px;
+    width: 300px;
+}
+
+#earth-spin {
+    display: block;
+    margin: 0 auto;
+}
+
+.banner {
+    margin-top: 150px;
+}
+
+.btn {
+    margin-top: 75px;
+    padding: 10px 20px;
+    background: rgb(0, 0, 0);
+    color: white;
+    border: 3px solid white;
+    font-size: larger;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.btn:hover {
+    margin-top: 75px;
+    padding: 10px 20px;
+    background: rgb(159, 159, 159);
+    color: rgb(0, 0, 0);
+    border: 3px solid rgb(159, 159, 159);
+    font-size: larger;
+    font-family: 'Orbitron', sans-serif;
+    transition: 0.3s ease-in-out;
+}
+
+.underline {
+    border-bottom: 4px solid white;
+}
+
+.underline:hover {
+    color: rgb(159, 159, 159);
+    border-bottom: 4px solid rgb(159, 159, 159);
+    transition: 0.3s ease-in-out;
+}
+
+.description {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-block: 50px;
+}
+
+#video-wrapper {
+    margin-block: 75px;
+}
+
+video {
+    position: relative;
+    z-index: 1;
+    max-height: 100%;
+    max-width: 100%;
+}
