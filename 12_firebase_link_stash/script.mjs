@@ -10,7 +10,7 @@ import {
 
 const firebaseConfig = {
     // Copied from firebase console / build / realtime database / database reference link
-    databaseURL: 'https://link-stash-2025-default-rtdb.europe-west1.firebasedatabase.app/'
+    databaseURL: // add firebase link here
 };
 
 // Initialize Firebase
