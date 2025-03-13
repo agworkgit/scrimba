@@ -48,4 +48,4 @@ A landing page for a space exploration company:
 ![preview image](2_space_exploration/assets/preview.jpg)
 
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/2_space_exploration)<br>
-[To see the project in action click here](https://https://spaceex-gif.netlify.app)
+[To see the project in action click here](https://https://spaceex-gif.netlify.app/)
