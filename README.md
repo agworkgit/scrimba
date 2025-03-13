@@ -41,6 +41,15 @@ World's most annoying cookie consent with the following features:
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/16_annoying_cookie_consent)<br>
 [To see the project in action click here](https://https://cookiehell-site.netlify.app)
 
+## Project 11
+
+A unit conversion utility app:
+
+![preview image](11_unit_conversion/assets/preview.jpg)
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/11_unit_conversion)<br>
+[To see the project in action click here](https://agunitconvert.netlify.app/)
+
 ## Project 8
 
 A blackjack web based game:
