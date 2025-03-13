@@ -28,3 +28,15 @@ Flingger, a tweeting app with the following features:
 
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/17_flingger)<br>
 [To see the project in action click here](https://flingger.netlify.app)
+
+## Project 16
+
+World's most annoying cookie consent with the following features:
+
+![preview image](16_annoying_cookie_consent/assets/preview.jpg)
+
+-   Won't allow you to decline.
+-   The rest is a 'surprise'.
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/16_annoying_cookie_consent)<br>
+[To see the project in action click here](https://https://cookiehell-site.netlify.app)
