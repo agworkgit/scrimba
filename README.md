@@ -19,6 +19,8 @@ A restaurant menu ordering app with the following features:
 
 Flingger, a tweeting app with the following features:
 
+![preview image](17_flingger/assets/preview.jpg)
+
 -   Tweet some text.
 -   Like a tweet.
 -   Re-tweet.
