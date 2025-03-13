@@ -14,3 +14,15 @@ A restaurant menu ordering app with the following features:
 
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/18_ordering_app)<br>
 [To see the project in action click here](https://agscrimba-ordering.netlify.app)
+
+## Project 17
+
+Flingger, a tweeting app with the following features:
+
+-   Tweet some text.
+-   Like a tweet.
+-   Re-tweet.
+-   View comments.
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/17_flingger)<br>
+[To see the project in action click here](https://flingger.netlify.app)
