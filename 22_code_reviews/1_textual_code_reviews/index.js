@@ -62,4 +62,5 @@ const promos = [
     { code: 'YOLOFREE', amount: 100, isActive: false },
 ];
 
-console.log(calculatefinalprice(500, 'Nifty50'));
+// console.log(calculatefinalprice(500, 'Nifty50'));
+console.log(calculatefinalprice(1000, 'YoloFree'));
