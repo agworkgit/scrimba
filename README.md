@@ -2,6 +2,18 @@
 
 The notes and projects I create while undertaking the Frontend Path at Scriba.
 
+## Project 21
+
+A fully responsive journal website with multiple pages:
+
+![preview image](21_learning_journal/assets/preview.jpg)
+
+-   Navigate between pages.
+-   Layout will shift based on the device viewing the website.
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/21_learning_journal)<br>
+[To see the project in action click here](https://aglearnjournal.netlify.app/)
+
 ## Project 18
 
 A restaurant menu ordering app with the following features:
