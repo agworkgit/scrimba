@@ -11,8 +11,17 @@ h1 {
 
 /* Don't use more than 2 to 3 different fonts, you'll take a performance hit */
 
+:root {
+    --font-s: 0.75rem;
+    --font-m: 1rem;
+    --font-l: 1.5rem;
+    --font-xl: 2rem;
+}
+
 * {
     margin: 0;
+    padding: 0;
+    font-size: 16px;
 }
 
 body {
@@ -21,26 +30,34 @@ body {
     color: white;
     text-align: center;
     font-family: 'Sofia Sans Semi Condensed', serif;
-    font-size: 24px;
+    padding-inline: 2rem;
 }
 
 #hero {
-    padding: 50px;
+    padding: 2rem;
     /* text-shadow: 0px 0px 2px whitesmoke; */
 }
 
 #main-logo {
+    margin: 0;
+    padding: 0;
     margin-bottom: 50px;
-    width: 300px;
+    width: 15rem;
 }
 
 #earth-spin {
     display: block;
     margin: 0 auto;
+    max-width: 50%;
 }
 
 .banner {
     margin-top: 150px;
+}
+
+.banner h1,
+span {
+    font-size: var(--font-l);
 }
 
 .btn {
@@ -49,7 +66,7 @@ body {
     background: rgb(0, 0, 0);
     color: white;
     border: 3px solid white;
-    font-size: larger;
+    font-size: var(--font-m);
     font-family: 'Orbitron', sans-serif;
 }
 
@@ -59,8 +76,6 @@ body {
     background: rgb(159, 159, 159);
     color: rgb(0, 0, 0);
     border: 3px solid rgb(159, 159, 159);
-    font-size: larger;
-    font-family: 'Orbitron', sans-serif;
     transition: 0.3s ease-in-out;
 }
 
@@ -78,15 +93,5 @@ body {
     max-width: 1000px;
     margin: 0 auto;
     padding-block: 50px;
-}
-
-#video-wrapper {
-    margin-block: 75px;
-}
-
-video {
-    position: relative;
-    z-index: 1;
-    max-height: 100%;
-    max-width: 100%;
+    font-size: var(--font-m);
 }
