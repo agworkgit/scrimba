@@ -2,6 +2,19 @@
 
 The notes and projects I create while undertaking the Frontend Path at Scriba. More will be added as I progress through the course.
 
+## Project 25
+
+A fully responsive colour picker:
+
+![preview image](25_colour_picker/assets/preview.png)
+
+-   Select basis colour.
+-   Select colour scheme.
+-   The app will make an API call to return a colour pelette from colourAPI.
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/25_colour_picker)<br>
+[To see the project in action click here](https://agcolourpicker.netlify.app/)
+
 ## Project 21
 
 A fully responsive journal website with multiple pages:
