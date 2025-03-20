@@ -64,7 +64,7 @@ World's most annoying cookie consent with the following features:
 -   The rest is a 'surprise'.
 
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/16_annoying_cookie_consent)<br>
-[To see the project in action click here](https://https://cookiehell-site.netlify.app)
+[To see the project in action click here](https://cookiehell-site.netlify.app)
 
 ## Project 11
 

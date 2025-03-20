@@ -176,3 +176,24 @@ input {
     box-shadow: 1px 1px 3px #999;
     border-radius: 5px;
 }
+
+.section-container {
+    padding: 1rem;
+}
+
+@media (min-width: 500px) {
+    main {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .modal {
+        margin: auto;
+        height: 520px;
+        width: 450px;
+    }
+
+    .section-container {
+        padding: 0rem;
+    }
+}
