@@ -23,9 +23,9 @@
 
 #wrapper {
     background: var(--offwhite);
-    height: 729px;
+    height: 1250px;
     width: 550px;
-    margin: 75px auto;
+    margin: 0px auto;
 }
 
 .wrapper-title {
