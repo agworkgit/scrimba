@@ -2,6 +2,20 @@
 
 The notes and projects I create while undertaking the Frontend Path at Scriba. More will be added as I progress through the course.
 
+## Project 26
+
+A war card game:
+
+![preview image](26_war_game/assets/preview.png)
+
+-   Draw cards from an API.
+-   Get remaining cards count from the API.
+-   Compare cards to find winner.
+-   Display game winner at the end.
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/26_war_game)<br>
+[To see the project in action click here](https://agwargame.netlify.app/)
+
 ## Project 25
 
 A fully responsive colour picker:
