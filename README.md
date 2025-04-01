@@ -12,6 +12,7 @@ A war card game:
 -   Get remaining cards count from the API.
 -   Compare cards to find winner.
 -   Display game winner at the end.
+-   Usage of async/await instead of .then promises.
 
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/26_war_game)<br>
 [To see the project in action click here](https://agwargame.netlify.app/)
