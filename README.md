@@ -4,15 +4,28 @@ The notes and projects I create while undertaking the Frontend Path at Scriba. M
 
 ## Project 26
 
-A war card game:
-
 ![preview image](26_war_game/assets/preview.png)
 
--   Draw cards from an API.
--   Get remaining cards count from the API.
--   Compare cards to find winner.
--   Display game winner at the end.
--   Usage of async/await instead of .then promises.
+## Topics covered in this project:
+
+### 1. Callbacks:
+
+-   Functions as first-class objects
+-   Built own .filter() method
+
+### 2. Promises:
+
+-   Learned about the three states (pending, fulfilled, rejected)
+-   .then() and promise chaining
+
+### 3. War:
+
+-   Deck of Cards API
+-   Styling & Layout
+-   Algorithm practice
+-   UX Improvements
+
+### 4. Async/Await
 
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/26_war_game)<br>
 [To see the project in action click here](https://agwargame.netlify.app/)
