@@ -1,7 +1,8 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: Helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
     box-sizing: border-box;
 }
 
@@ -29,6 +30,7 @@ body {
 }
 
 #watchlist-btn {
+    text-decoration: none;
     border: none;
     background: transparent;
     color: #ffffff;
@@ -73,10 +75,32 @@ body {
     border-right: 1px solid rgb(171, 171, 171);
     text-align: left;
     font-size: 1rem;
+    padding-inline: 1rem;
 }
 
-#search-input:focus {
+#search-input:focus,
+#search-input:active {
     outline: none;
+    background: #ffffff !important;
+}
+
+/* Change Autofill Style */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+input:-webkit-autofill::first-line {
+    border: none;
+    font-size: 1rem !important;
+    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 #search-btn {

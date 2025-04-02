@@ -226,7 +226,7 @@ movieListContainer.onclick = function (event) {
     }
 }; */
 
-document.addEventListener('click', function (e) {
+/* document.addEventListener('click', function (e) {
     if (e.target.id === 'watchlist-add') {
         handleAddClick();
     }
@@ -235,4 +235,4 @@ document.addEventListener('click', function (e) {
 // Handle click events
 function handleAddClick() {
     console.log('click detected');
-}
+} */
