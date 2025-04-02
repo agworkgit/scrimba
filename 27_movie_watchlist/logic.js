@@ -8,9 +8,15 @@ const accessKey = '34763e45';
 const searchBtn = document.getElementById('search-btn');
 
 let searchTerm = '';
-let posterImage = '';
 let listingTitle = '';
 let listingRating = document.getElementById('listing-rating');
+
+let posterImage = '';
+let posterTitle = '';
+let posterRating = '';
+let posterDuration = '';
+let posterGenres = '';
+let posterPlot = '';
 
 // Resources
 
@@ -37,9 +43,32 @@ async function getData() {
 
         // Create listings
 
-        posterImage = data.Search[i].Poster;
+        // Set Poster
+
+        if (
+            data.Search[i].Poster === "N/A" ||
+            (document.querySelector('#image-wrapper') &&
+                parseFloat(getComputedStyle(document.querySelector('#image-wrapper')).width) < 16)
+        )
+
+        // Prevent image not found or 404 
+
+        {
+            posterImage = `./assets/images/placeholder-image.jpg`;
+        } else {
+            posterImage = data.Search[i].Poster;
+        };
+
         posterTitle = data.Search[i].Title;
-        posterRating = textualData.Ratings[0].Value;
+
+        // Set Rating
+
+        if (textualData.Ratings.length === 0) {
+            posterRating = 'Rating not available';
+        } else {
+            posterRating = textualData.Ratings[0].Value;
+        }
+
         posterDuration = textualData.Runtime;
         posterGenres = textualData.Genre;
         posterPlot = textualData.Plot;
@@ -96,6 +125,7 @@ async function getData() {
         // Watchlist
         let watchlistBtn = document.createElement('button');
         watchlistBtn.setAttribute('id', 'watchlist-add');
+        watchlistBtn.classList.add('watchlist-save');
         watchlistBtn.innerHTML = `<img src='${plusIcon}' id='plus-icon'><p>Watchlist</p>`;
 
         // Plot Wrapper
@@ -137,3 +167,72 @@ searchBtn.addEventListener('click', () => {
     getData();
 });
 
+// Save data
+
+/* let watchlistContainer = document.querySelector('.watchlist-container');
+
+watchlistContainer.addEventListener('click', function (event) {
+    if (event.target.classList.contains('watchlist-save')) {
+        // Your code to handle the click event
+        console.log('Button clicked:', event.target);
+        localStorage.setItem('posterImage', `${posterImage}`);
+        localStorage.setItem('posterTitle', `${posterTitle}`);
+        localStorage.setItem('posterRating', `${posterRating}`);
+        localStorage.setItem('posterDuration', `${posterDuration}`);
+        localStorage.setItem('posterGenres', `${posterGenres}`);
+        localStorage.setItem('posterPlot', `${posterPlot}`);
+    }
+}); */
+
+/* document.addEventListener('DOMContentLoaded', function () {
+    let movieListContainer = document.querySelector('#movie-list');
+
+    if (movieListContainer) {
+        movieListContainer.addEventListener('click', function (event) {
+            if (event.target.classList.contains('watchlist-save')) {
+                localStorage.setItem('posterImage', `${posterImage}`);
+                localStorage.setItem('posterTitle', `${posterTitle}`);
+                localStorage.setItem('posterRating', `${posterRating}`);
+                localStorage.setItem('posterDuration', `${posterDuration}`);
+                localStorage.setItem('posterGenres', `${posterGenres}`);
+                localStorage.setItem('posterPlot', `${posterPlot}`);
+            }
+        });
+    } else {
+        console.error('Movie list container not found');
+    }
+}); */
+
+/* const movieListContainer = document.querySelector('#movie-list');
+
+// Listen For Clicks Within Container
+movieListContainer.onclick = function (event) {
+    // Prevent default behavior of button
+    event.preventDefault();
+
+    // Store Target Element In Variable
+    const element = event.target;
+
+    // If Target Element Is a Button
+    if (element.nodeName === 'BUTTON') {
+        // Event Code
+        console.log(element);
+        localStorage.setItem('posterImage', `${posterImage}`);
+        localStorage.setItem('posterTitle', `${posterTitle}`);
+        localStorage.setItem('posterRating', `${posterRating}`);
+        localStorage.setItem('posterDuration', `${posterDuration}`);
+        localStorage.setItem('posterGenres', `${posterGenres}`);
+        localStorage.setItem('posterPlot', `${posterPlot}`);
+    }
+}; */
+
+document.addEventListener('click', function (e) {
+    if (e.target.id === 'watchlist-add') {
+        handleAddClick();
+    }
+});
+
+// Handle click events
+function handleAddClick() {
+    console.log('click detected');
+}
