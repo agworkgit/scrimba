@@ -5,11 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="logic.js" defer></script>
     <title>Search</title>
 </head>
 
 <body>
-
+    <header id='banner'>
+        <h1 id='banner-title'>Find your film</h1>
+        <button id='watchlist-btn'>My Watchlist</button>
+    </header>
+    <section id='list-wrapper'>
+        <div id='search'>
+            <img id='search-icon' src="./assets/icons/search-light.png" alt="search icon">
+            <input type="text" name="search-movie" id="search-input" placeholder='Search for a movie'>
+            <button id='search-btn'>Search</button>
+        </div>
+        <div id='movie-list'>
+            <div id='start-page-tooltip'>
+                <img id='tooltip-img' src="./assets/icons/movie-light.png" alt="movie-icon">
+                <p id='tooltip-slogan'>Start exploring</p>
+            </div>
+        </div>
+    </section>
 </body>
 
 </html>
