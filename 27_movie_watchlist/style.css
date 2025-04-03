@@ -205,30 +205,6 @@ input:-webkit-autofill::first-line {
     gap: 2rem;
 }
 
-#watchlist-add {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: none;
-    border: none;
-    border: 1px solid rgb(202, 202, 202);
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    text-align: center;
-}
-
-#watchlist-add:hover {
-    background: rgba(69, 69, 69, 0.25);
-    border-radius: 0.5rem;
-}
-
-#plus-icon {
-    filter: invert();
-    width: 1.25rem;
-}
-
 #listing-title {
     font-size: 2rem;
     font-weight: 400;
@@ -257,7 +233,8 @@ input:-webkit-autofill::first-line {
 
 /* Watchlist Page Styles */
 
-#remove-btn {
+#remove-btn,
+#watchlist-add {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -271,11 +248,13 @@ input:-webkit-autofill::first-line {
     text-align: center;
 }
 
-#remove-btn:hover {
+#remove-btn:hover,
+#watchlist-add:hover {
     background: rgba(69, 69, 69, 0.25);
     border-radius: 0.5rem;
 }
 
+#plus-icon,
 #minus-icon {
     filter: invert();
     width: 1.25rem;

@@ -26,6 +26,7 @@ function renderSavedMovies() {
     movieList.innerHTML = '';
 
     const movieDataString = localStorage.getItem('savedMovies'); // Use the title to get the data
+
     if (movieDataString) {
         const movieData = JSON.parse(movieDataString);
         console.log(movieData); // Use movieData as needed
