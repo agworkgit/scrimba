@@ -20,6 +20,21 @@ let posterGenres = '';
 let posterPlot = '';
 let posterId = '';
 
+let startPageTooltip = document.createElement("div");
+startPageTooltip.setAttribute("id", "start-page-tooltip");
+
+let startPageImage = document.createElement("img");
+startPageImage.setAttribute("id", "tooltip-img");
+startPageImage.setAttribute("src", "./assets/icons/movie-light.png");
+
+let startPageSlogan = document.createElement("p");
+startPageSlogan.setAttribute("id", "tooltip-slogan");
+startPageSlogan.textContent = "Search for a title to add to watchlist";
+
+startPageTooltip.append(startPageImage);
+startPageTooltip.append(startPageSlogan);
+movieList.append(startPageTooltip);
+
 // Resources
 
 let plusIcon = `./assets/icons/plus.png`;
