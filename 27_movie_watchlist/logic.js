@@ -11,12 +11,14 @@ let searchTerm = '';
 let listingTitle = '';
 let listingRating = document.getElementById('listing-rating');
 
+let posterArray = [];
 let posterImage = '';
 let posterTitle = '';
 let posterRating = '';
 let posterDuration = '';
 let posterGenres = '';
 let posterPlot = '';
+let posterId = '';
 
 // Resources
 
@@ -30,7 +32,7 @@ async function getData() {
 
     // Create listing data
 
-    console.log(data);
+    // console.log(data);
 
     for (let i = 0; i < data.Search.length; i++) {
 
@@ -69,9 +71,11 @@ async function getData() {
             posterRating = textualData.Ratings[0].Value;
         }
 
+        posterArray.push(textualData);
         posterDuration = textualData.Runtime;
         posterGenres = textualData.Genre;
         posterPlot = textualData.Plot;
+        posterId = textualData.imdbID;
 
         // Image Wrapper
         let imageWrapper = document.createElement('div');
@@ -125,8 +129,11 @@ async function getData() {
         // Watchlist
         let watchlistBtn = document.createElement('button');
         watchlistBtn.setAttribute('id', 'watchlist-add');
+
+        // Added data-id to be used for identification
+        watchlistBtn.setAttribute('data-id', `${textualData.imdbID}`);
         watchlistBtn.classList.add('watchlist-save');
-        watchlistBtn.innerHTML = `<img src='${plusIcon}' id='plus-icon'><p>Watchlist</p>`;
+        watchlistBtn.innerHTML = `<img src='${plusIcon}' id='plus-icon'><p>Add To Watchlist</p>`;
 
         // Plot Wrapper
 
@@ -167,72 +174,21 @@ searchBtn.addEventListener('click', () => {
     getData();
 });
 
-// Save data
+// Save data & event delegation
+document.getElementById('movie-list').addEventListener('click', function (event) {
+    // Check if a button was clicked
+    if (event.target.tagName === 'BUTTON') {
+        const movieId = event.target.getAttribute('data-id');
 
-/* let watchlistContainer = document.querySelector('.watchlist-container');
+        // You can use the movieId to get the specific movie details if needed
+        const movieToSave = posterArray.find(movie => movie.imdbID === movieId);
+        // Assuming you have access to the movies array
 
-watchlistContainer.addEventListener('click', function (event) {
-    if (event.target.classList.contains('watchlist-save')) {
-        // Your code to handle the click event
-        console.log('Button clicked:', event.target);
-        localStorage.setItem('posterImage', `${posterImage}`);
-        localStorage.setItem('posterTitle', `${posterTitle}`);
-        localStorage.setItem('posterRating', `${posterRating}`);
-        localStorage.setItem('posterDuration', `${posterDuration}`);
-        localStorage.setItem('posterGenres', `${posterGenres}`);
-        localStorage.setItem('posterPlot', `${posterPlot}`);
-    }
-}); */
+        // Save to localStorage
+        let savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
+        savedMovies.push(movieToSave);
+        localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
 
-/* document.addEventListener('DOMContentLoaded', function () {
-    let movieListContainer = document.querySelector('#movie-list');
-
-    if (movieListContainer) {
-        movieListContainer.addEventListener('click', function (event) {
-            if (event.target.classList.contains('watchlist-save')) {
-                localStorage.setItem('posterImage', `${posterImage}`);
-                localStorage.setItem('posterTitle', `${posterTitle}`);
-                localStorage.setItem('posterRating', `${posterRating}`);
-                localStorage.setItem('posterDuration', `${posterDuration}`);
-                localStorage.setItem('posterGenres', `${posterGenres}`);
-                localStorage.setItem('posterPlot', `${posterPlot}`);
-            }
-        });
-    } else {
-        console.error('Movie list container not found');
-    }
-}); */
-
-/* const movieListContainer = document.querySelector('#movie-list');
-
-// Listen For Clicks Within Container
-movieListContainer.onclick = function (event) {
-    // Prevent default behavior of button
-    event.preventDefault();
-
-    // Store Target Element In Variable
-    const element = event.target;
-
-    // If Target Element Is a Button
-    if (element.nodeName === 'BUTTON') {
-        // Event Code
-        console.log(element);
-        localStorage.setItem('posterImage', `${posterImage}`);
-        localStorage.setItem('posterTitle', `${posterTitle}`);
-        localStorage.setItem('posterRating', `${posterRating}`);
-        localStorage.setItem('posterDuration', `${posterDuration}`);
-        localStorage.setItem('posterGenres', `${posterGenres}`);
-        localStorage.setItem('posterPlot', `${posterPlot}`);
-    }
-}; */
-
-/* document.addEventListener('click', function (e) {
-    if (e.target.id === 'watchlist-add') {
-        handleAddClick();
+        console.log('Movie saved:', movieToSave);
     }
 });
-
-// Handle click events
-function handleAddClick() {
-    console.log('click detected');
-} */
