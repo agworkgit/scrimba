@@ -2,6 +2,21 @@
 
 The notes and projects I create while undertaking the Frontend Path at Scriba. More will be added as I progress through the course.
 
+## Project 27 (Solo Project)
+
+A fully responsive movie search portal with a watchlist:
+
+![preview image](27_movie_watchlist/assets/preview/preview.jpg)
+
+-   Input text to search movie title.
+-   API will fetch movies matching your text input.
+-   The app will render each key in the object into a visible list.
+-   Titles can then be saved to your watchlist (localStorage).
+-   Watchlist entries can be removed (localStorage).
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/27_movie_watchlist)<br>
+[To see the project in action click here](https://agwatchlist.netlify.app/)
+
 ## Project 26
 
 ![preview image](26_war_game/assets/preview.png)
@@ -30,7 +45,7 @@ The notes and projects I create while undertaking the Frontend Path at Scriba. M
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/26_war_game)<br>
 [To see the project in action click here](https://agwargame.netlify.app/)
 
-## Project 25
+## Project 25 (Solo Project)
 
 A fully responsive colour picker:
 
@@ -43,7 +58,7 @@ A fully responsive colour picker:
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/25_colour_picker)<br>
 [To see the project in action click here](https://agcolourpicker.netlify.app/)
 
-## Project 21
+## Project 21 (Solo Project)
 
 A fully responsive journal website with multiple pages:
 
@@ -55,7 +70,7 @@ A fully responsive journal website with multiple pages:
 [To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/21_learning_journal)<br>
 [To see the project in action click here](https://aglearnjournal.netlify.app/)
 
-## Project 18
+## Project 18 (Solo Project)
 
 A restaurant menu ordering app with the following features:
 

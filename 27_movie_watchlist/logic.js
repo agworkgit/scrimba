@@ -42,7 +42,7 @@ let plusIcon = `./assets/icons/plus.png`;
 // Get data from API
 
 async function getData() {
-    const res = await fetch(`http://www.omdbapi.com/?apikey=${accessKey}&s=${searchTerm}`);
+    const res = await fetch(`https://www.omdbapi.com/?apikey=${accessKey}&s=${searchTerm}`);
     const data = await res.json();
 
     // Create listing data
@@ -54,7 +54,7 @@ async function getData() {
         // Get plots and ratings
 
         let imdbID = data.Search[i].imdbID;
-        const textualRes = await fetch(`http://www.omdbapi.com/?apikey=${accessKey}&i=${imdbID}&plot=short&r=json`);
+        const textualRes = await fetch(`https://www.omdbapi.com/?apikey=${accessKey}&i=${imdbID}&plot=short&r=json`);
         const textualData = await textualRes.json();
         console.log(textualData);
 
