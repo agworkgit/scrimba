@@ -25,7 +25,7 @@ startPageTooltip.setAttribute("id", "start-page-tooltip");
 
 let startPageImage = document.createElement("img");
 startPageImage.setAttribute("id", "tooltip-img");
-startPageImage.setAttribute("src", "./assets/icons/movie-light.png");
+startPageImage.setAttribute("src", "./assets/icons/movie.png");
 
 let startPageSlogan = document.createElement("p");
 startPageSlogan.setAttribute("id", "tooltip-slogan");
@@ -157,6 +157,7 @@ async function getData() {
 
         let listingPlot = document.createElement("p");
         listingPlot.setAttribute('id', 'listing-plot');
+        listingPlot.classList.add('cut-text');
         listingPlot.textContent = `${posterPlot}`;
 
         // Appends
@@ -190,10 +191,11 @@ searchBtn.addEventListener('click', () => {
 });
 
 // Save data & event delegation
-document.getElementById('movie-list').addEventListener('click', function (event) {
+movieList.addEventListener('click', function (event) {
     // Check if a button was clicked
-    if (event.target.tagName === 'BUTTON') {
-        const movieId = event.target.getAttribute('data-id');
+    const button = event.target.closest('button');
+    if (button) {
+        const movieId = button.getAttribute('data-id');
 
         // You can use the movieId to get the specific movie details if needed
         const movieToSave = posterArray.find(movie => movie.imdbID === movieId);
