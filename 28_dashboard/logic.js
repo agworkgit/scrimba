@@ -16,7 +16,9 @@
  * https://css-tricks.com/perfect-full-page-background-image/#awesome-easy-progressive-css3-way)
  */
 
-let bodyWrapper = document.createElement('div');
+// Container elements
+
+let bodyWrapper = document.createElement('main');
 bodyWrapper.setAttribute('id', 'body-wrapper');
 document.body.append(bodyWrapper);
 
@@ -24,9 +26,31 @@ let bodyImage = document.createElement('div');
 bodyImage.setAttribute('id', 'body-image');
 bodyWrapper.append(bodyImage);
 
+// Dashboard elements
+
+let topContainer = document.createElement('div');
+topContainer.setAttribute('id', 'top-container');
+let cryptoContent = document.createElement('p'); // replace this with something else
+let weatherContent = document.createElement('p');
+cryptoContent.textContent = 'Crypto...';
+weatherContent.textContent = 'Weather...';
+topContainer.append(cryptoContent);
+topContainer.append(weatherContent);
+bodyImage.append(topContainer);
+
+let midContainer = document.createElement('div');
+midContainer.setAttribute('id', 'mid-container');
+midContainer.textContent = '11:33';
+bodyImage.append(midContainer);
+
+let botContainer = document.createElement('div');
+botContainer.setAttribute('id', 'bot-container');
+botContainer.textContent = 'Something Else...';
+bodyImage.append(botContainer);
+
 async function setBackgroundImage() {
     // Get a random image
-    const data = await fetch('https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=minimal');
+    const data = await fetch('https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=minimal+nature');
     const res = await data.json();
     const backgroundImageSrc = `${res.urls.regular}`;
     let backgroundImageAuthor = '';
@@ -42,10 +66,10 @@ async function setBackgroundImage() {
 
     // Show Image Author
     function showImageAuthor() {
-        const imageAuthor = document.createElement('h3');
+        const imageAuthor = document.createElement('p');
         imageAuthor.textContent = `${backgroundImageAuthor} `;
         imageAuthor.setAttribute('id', 'image-author');
-        bodyImage.append(imageAuthor);
+        botContainer.append(imageAuthor);
     }
 
     showImageAuthor();
