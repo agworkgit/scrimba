@@ -16,16 +16,39 @@
  * https://css-tricks.com/perfect-full-page-background-image/#awesome-easy-progressive-css3-way)
  */
 
+let bodyWrapper = document.createElement('div');
+bodyWrapper.setAttribute('id', 'body-wrapper');
+document.body.append(bodyWrapper);
+
+let bodyImage = document.createElement('div');
+bodyImage.setAttribute('id', 'body-image');
+bodyWrapper.append(bodyImage);
 
 async function setBackgroundImage() {
     // Get a random image
     const data = await fetch('https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=minimal');
     const res = await data.json();
-    const backgroundImageSrc = res.urls.full;
+    const backgroundImageSrc = `${res.urls.regular}`;
+    let backgroundImageAuthor = '';
+
+    if (res.user.last_name != null) {
+        backgroundImageAuthor = `Image by : ${res.user.first_name} ${res.user.last_name} `;
+    } else {
+        backgroundImageAuthor = `Image by : ${res.user.first_name}`;
+    }
 
     // Set the body background to that image
-    let docBody = document.getElementById('main-body');
-    docBody.style.backgroundImage = `url(${backgroundImageSrc})`;
+    bodyImage.style.backgroundImage = `url(${backgroundImageSrc})`;
+
+    // Show Image Author
+    function showImageAuthor() {
+        const imageAuthor = document.createElement('h3');
+        imageAuthor.textContent = `${backgroundImageAuthor} `;
+        imageAuthor.setAttribute('id', 'image-author');
+        bodyImage.append(imageAuthor);
+    }
+
+    showImageAuthor();
 }
 
 setBackgroundImage();
