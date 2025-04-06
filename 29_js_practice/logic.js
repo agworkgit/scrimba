@@ -1,8 +1,8 @@
 // Global Variables
 
 const canvas = document.getElementById('game');
-canvas.width = document.body.clientWidth; //document.width is obsolete
-canvas.height = document.body.clientHeight; //document.height is obsolete
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 const width = canvas.width;
 const height = canvas.height;
 const context = canvas.getContext('2d');
