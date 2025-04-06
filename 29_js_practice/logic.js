@@ -1,10 +1,6 @@
 // Global Variables
 
 const canvas = document.getElementById('game');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const width = canvas.width;
-const height = canvas.height;
 const context = canvas.getContext('2d');
 
 // Draw Circle
@@ -19,11 +15,13 @@ function fullCircle(context, x, y, radius, colour = 'green') {
 // Animation Frames - Event Loop
 
 let start;
-let x = width / 2;
-let y = height / 2;
+
 let radius = 32;
-let dx = 100;
-let dy = 100;
+let x = radius + 10;
+let y = radius + 10;
+let speed = 250;
+let dx = speed;
+let dy = speed;
 
 function step(timestamp) {
     if (start === undefined) {
@@ -31,6 +29,11 @@ function step(timestamp) {
     }
     const dt = (timestamp - start) / 1000;
     start = timestamp;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
 
     // Bounce physics
 
