@@ -26,7 +26,7 @@ let start;
 let radius = 32;
 let x = radius + 10;
 let y = radius + 10;
-let speed = 100;
+let speed = 500;
 let dx = speed;
 let dy = speed;
 
@@ -48,14 +48,14 @@ function step(timestamp) {
         dx = dx * -1;
         sfxBounce.pause();
         sfxBounce.currentTime = 0; // reset playhead
-        sfxBounce.play();
+        // sfxBounce.play();
     }
 
     if (y + radius >= height || y - radius <= 0) {
         dy = dy * -1;
         sfxBounce.pause();
         sfxBounce.currentTime = 0; // reset playhead
-        sfxBounce.play();
+        // sfxBounce.play();
     }
 
     // Position update logic
@@ -73,3 +73,9 @@ function step(timestamp) {
     window.requestAnimationFrame(step);
 }
 window.requestAnimationFrame(step);
+
+// Key press events
+
+canvas.addEventListener('keydown', (event) => {
+    console.log('You pressed', event);
+});
