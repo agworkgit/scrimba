@@ -3,6 +3,13 @@
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
+// Sounds
+
+let sfxBounce = document.createElement('audio');
+sfxBounce.setAttribute('id', 'bounce-sfx');
+sfxBounce.setAttribute('src', './assets/sfx/wall-bounce.mp3');
+document.body.append(sfxBounce);
+
 // Draw Circle
 
 function fullCircle(context, x, y, radius, colour = 'green') {
@@ -19,7 +26,7 @@ let start;
 let radius = 32;
 let x = radius + 10;
 let y = radius + 10;
-let speed = 250;
+let speed = 1000;
 let dx = speed;
 let dy = speed;
 
@@ -39,10 +46,12 @@ function step(timestamp) {
 
     if (x + radius >= width || x - radius <= 0) {
         dx = dx * -1;
+        sfxBounce.play();
     }
 
     if (y + radius >= height || y - radius <= 0) {
         dy = dy * -1;
+        sfxBounce.play();
     }
 
     // Position update logic
