@@ -2,6 +2,12 @@
 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
+let radius = 64;
+let x = radius + 10;
+let y = radius + 10;
+let speed = 600;
+// let dx = speed;
+// let dy = speed;
 
 // Draw Circle
 
@@ -40,18 +46,17 @@ class v2 {
     }
 }
 
-// Animation Frames - Event Loop
-
-let start;
-
-let radius = 32;
-let x = radius + 10;
-let y = radius + 10;
 let pos = new v2(x, y);
 let vel = new v2(0, 0);
-let speed = 500;
-// let dx = speed;
-// let dy = speed;
+
+
+
+let keyState = {
+    'KeyW': false,
+    'KeyS': false,
+    'KeyA': false,
+    'KeyD': false,
+};
 
 // Object Direction
 
@@ -62,6 +67,10 @@ let directionMap = {
     'KeyD': new v2(speed, 0),
     // 'Space': new v2()
 };
+
+// Animation Frames - Event Loop
+
+let start;
 
 function step(timestamp) {
     if (start === undefined) {
@@ -78,17 +87,17 @@ function step(timestamp) {
     // Bounce physics
 
     if (x + radius >= width || x - radius <= 0) {
-        dx = dx * -1;
+        // dx = dx * -1;
         sfxBounce.pause();
         sfxBounce.currentTime = 0; // reset playhead
-        // sfxBounce.play();
+        sfxBounce.play();
     }
 
     if (y + radius >= height || y - radius <= 0) {
-        dy = dy * -1;
+        // dy = dy * -1;
         sfxBounce.pause();
         sfxBounce.currentTime = 0; // reset playhead
-        // sfxBounce.play();
+        sfxBounce.play();
     }
 
     // Position update logic
@@ -112,7 +121,8 @@ window.requestAnimationFrame(step);
 
 canvas.addEventListener('keydown', (event) => {
     // console.log('You pressed', event);
-    if (event.code in directionMap) {
+    if (event.code in directionMap && !keyState[event.code]) {
+        keyState[event.code] = true; // Set key state to pressed
         vel = vel.add(directionMap[event.code]);
     }
 });
@@ -120,6 +130,14 @@ canvas.addEventListener('keydown', (event) => {
 canvas.addEventListener('keyup', (event) => {
     // console.log('You pressed', event);
     if (event.code in directionMap) {
+        keyState[event.code] = false; // Set key state to not pressed
         vel = vel.sub(directionMap[event.code]);
+
+        // Reset the corresponding velocity component to zero else it compounds
+        if (event.code === 'KeyW' || event.code === 'KeyS') {
+            vel.y = 0; // Reset vertical velocity
+        } else if (event.code === 'KeyA' || event.code === 'KeyD') {
+            vel.x = 0; // Reset horizontal velocity
+        }
     }
 });
