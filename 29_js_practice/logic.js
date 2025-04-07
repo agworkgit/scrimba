@@ -111,6 +111,13 @@ function step(timestamp) {
 
     // console.log(elapsed);
 
+    // Instructions
+
+    context.translate(width / 2 - radius, height / 2 - radius);
+    context.fillStyle = 'white';
+    context.font = '24px Arial';
+    context.fillText('To control the object press W, S, A or D', 0 - 130, 0 - height / 3);
+
     fullCircle(context, pos, radius, 'royalblue');
 
     window.requestAnimationFrame(step);
