@@ -115,7 +115,7 @@ function step(timestamp) {
 
     context.translate(width / 2 - radius, height / 2 - radius);
     context.fillStyle = 'white';
-    context.font = '24px Arial';
+    context.font = '24px VT323';
     context.fillText('To control the object press W, S, A or D', 0 - 130, 0 - height / 3);
 
     fullCircle(context, pos, radius, 'royalblue');
