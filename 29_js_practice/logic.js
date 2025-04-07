@@ -3,6 +3,22 @@
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
+// Draw Circle
+
+function fullCircle(context, center, radius, colour = 'green') {
+    context.beginPath();
+    context.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = colour;
+    context.fill();
+}
+
+// Sounds
+
+let sfxBounce = document.createElement('audio');
+sfxBounce.setAttribute('id', 'bounce-sfx');
+sfxBounce.setAttribute('src', './assets/sfx/wall-bounce.mp3');
+document.body.append(sfxBounce);
+
 // Classes
 
 class v2 {
@@ -15,27 +31,14 @@ class v2 {
         return new v2(this.x + that.x, this.y + that.y);
     }
 
+    sub(that) {
+        return new v2(this.x - that.x, this.y - that.y);
+    }
+
     scale(scalar) {
         return new v2(this.x * scalar, this.y * scalar);
     }
 }
-
-// Draw Circle
-
-function fullCircle(context, center, radius, colour = 'green') {
-    context.beginPath();
-    context.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
-    context.fillStyle = colour;
-    context.fill();
-}
-
-
-// Sounds
-
-let sfxBounce = document.createElement('audio');
-sfxBounce.setAttribute('id', 'bounce-sfx');
-sfxBounce.setAttribute('src', './assets/sfx/wall-bounce.mp3');
-document.body.append(sfxBounce);
 
 // Animation Frames - Event Loop
 
@@ -110,32 +113,13 @@ window.requestAnimationFrame(step);
 canvas.addEventListener('keydown', (event) => {
     // console.log('You pressed', event);
     if (event.code in directionMap) {
-        vel = directionMap[event.code];
+        vel = vel.add(directionMap[event.code]);
     }
-
-    // same as below
-    // switch (event.code) {
-    //     case 'KeyA':
-    //         console.log('A');
-    //         break;
-    //     case 'KeyS':
-    //         console.log('S');
-    //         break;
-    //     case 'KeyD':
-    //         console.log('D');
-    //         break;
-    //     case 'KeyW':
-    //         console.log('W');
-    //         break;
-    //     case 'Space':
-    //         console.log('Space');
-    //         break;
-    // }
 });
 
 canvas.addEventListener('keyup', (event) => {
     // console.log('You pressed', event);
     if (event.code in directionMap) {
-        vel = new v2(0, 0);
+        vel = vel.sub(directionMap[event.code]);
     }
 });
