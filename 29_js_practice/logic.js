@@ -3,8 +3,8 @@
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 let radius = 64;
-let x = radius + 10;
-let y = radius + 10;
+let x = 0;
+let y = 0;
 let speed = 600;
 // let dx = speed;
 // let dy = speed;
@@ -113,10 +113,11 @@ function step(timestamp) {
 
     // Instructions
 
-    context.translate(width / 2 - radius, height / 2 - radius);
+    context.translate(width / 2, height / 2);
     context.fillStyle = 'white';
     context.font = '24px VT323';
-    context.fillText('To control the object press W, S, A or D', 0 - 130, 0 - height / 3);
+    context.textAlign = 'center';
+    context.fillText('To control the object press W, S, A or D', 0, height / 3);
 
     fullCircle(context, pos, radius, 'royalblue');
 
