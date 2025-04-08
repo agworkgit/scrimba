@@ -27,6 +27,10 @@ class v2 {
     scale(scalar) {
         return new v2(this.x * scalar, this.y * scalar);
     }
+
+    length() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
 }
 
 // Tracking Key State - prevents object flying off the screen
@@ -74,7 +78,15 @@ class TutorialPopup {
     }
 
     update(dt) {
+        this.alpha += this.dalpha * dt;
 
+        if (this.dalpha < 0.0 && this.alpha <= 0.0) {
+            this.dalpha = 0.0;
+            this.alpha = 0.0;
+        } else if (this.dalpha > 0.0 && this.alpha >= 1.0) {
+            this.dalpha = 0.0;
+            this.alpha = 1.0;
+        }
     }
 
     render(context) {
@@ -82,7 +94,7 @@ class TutorialPopup {
         const height = context.canvas.height;
 
         context.translate(width / 2, height / 2);
-        context.fillStyle = 'white';
+        context.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
         context.font = '18px VT323';
         context.textAlign = 'center';
         context.fillText(this.text, 0, height / 3);
@@ -102,8 +114,10 @@ class TutorialPopup {
 class Game {
     constructor() {
         this.pos = new v2(radius + 10, radius + 10);
-        this.popup = new TutorialPopup("Press 'W', 'S', 'A' or 'D' to move around.");
         this.vel = new v2(0, 0);
+        this.popup = new TutorialPopup("Press 'W', 'S', 'A' or 'D' to move around.");
+        this.popup.fadeIn();
+        this.playerLearnedToMove = false;
 
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
@@ -112,6 +126,11 @@ class Game {
     update(dt) {
         this.pos = this.pos.add(this.vel.scale(dt));
         this.popup.update(dt);
+
+        if (!this.playerLearnedToMove && this.vel.length() > 0.0) {
+            this.playerLearnedToMove = true;
+            this.popup.fadeOut();
+        }
     }
 
     render(context) {
