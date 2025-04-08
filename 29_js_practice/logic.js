@@ -17,7 +17,7 @@ const bulletLifetime = 5; // important - prevents memory overflow
 const enemyColour = 'rgb(223, 113, 113)';
 const enemyRadius = playerRadius - 12;
 const enemySpeed = playerSpeed / 3;
-const particleCount = 10;
+const particleCount = 50;
 const particleRadius = 10;
 const particleMagnitude = bulletSpeed;
 const particleLifetime = 1;
@@ -98,18 +98,20 @@ class Particle {
 
     update(dt) {
         this.pos = this.pos.add(this.vel.scale(dt));
+        this.lifetime -= dt;
     }
 }
 
 function particleBurst(particles, centre) {
-    for (let i = 0; i < Math.random() * particleCount; i++) {
+    const particleLength = Math.random() * particleCount;
+    for (let i = 0; i < particleLength; i++) {
         particles.push(new Particle(
             centre,
             polarCoord(
                 Math.random() * particleMagnitude,
                 Math.random() * 2 * Math.PI),
             Math.random() * particleLifetime,
-            Math.random() * particleRadius
+            (Math.random() * particleRadius) + 1
         ));
     }
 }
@@ -288,8 +290,6 @@ class Game {
         this.enemies = [];
         this.particles = [];
 
-        this.enemies.push(new Enemy(new v2(100, 100)));
-
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
     }
@@ -325,6 +325,10 @@ class Game {
         }
 
         this.enemies = this.enemies.filter(enemy => !enemy.dead);
+
+        if (this.tutorial.state == tutorialState.finishedLearning) {
+
+        }
     }
 
     render(context) {
