@@ -10,8 +10,8 @@ const speed = 600;
 let x = 0;
 let y = 0;
 const bulletRadius = 10;
-const bulletSpeed = speed * 2;
-const bulletLifetime = 5.0;
+const bulletSpeed = speed * 3;
+const bulletLifetime = 5;
 
 // Classes
 
@@ -160,7 +160,7 @@ class Game {
             bullet.update(dt);
         }
 
-        this.bullets.filter((bullet) => bullet.lifetime > 0.0);
+        this.bullets = this.bullets.filter((bullet) => bullet.lifetime > 0.0);
     }
 
     render(context) {
