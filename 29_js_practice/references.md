@@ -7,3 +7,5 @@
 -   Play Sounds - https://www.w3schools.com/jsref/met_audio_play.asp
 -   Reset Sounds - https://codetogo.io/how-to-stop-audio-in-javascript/
 -   MIT License - https://choosealicense.com/licenses/mit/#
+-   State Machine (Used for the into tutorial) - https://developer.mozilla.org/en-US/docs/Glossary/State_machine
+-   State Machine in JS - https://www.youtube.com/watch?v=0NkfCi-hKCc
