@@ -119,10 +119,12 @@ class Bullet {
     constructor(pos, vel) {
         this.pos = pos;
         this.vel = vel;
+        this.lifetime = bulletLifetime;
     }
 
     update(dt) {
         this.pos = this.pos.add(this.vel.scale(dt));
+        this.lifetime -= dt;
     }
 
     render(context) {
@@ -139,7 +141,7 @@ class Game {
         this.popup = new TutorialPopup("Press 'W', 'S', 'A' or 'D' to move around.");
         this.popup.fadeIn();
         this.playerLearntToMove = false;
-        this.bullets = new Set();
+        this.bullets = [];
 
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
@@ -157,6 +159,8 @@ class Game {
         for (let bullet of this.bullets) {
             bullet.update(dt);
         }
+
+        this.bullets.filter((bullet) => bullet.lifetime > 0.0);
     }
 
     render(context) {
@@ -209,7 +213,7 @@ class Game {
             .normalise()
             .scale(bulletSpeed);
 
-        this.bullets.add(new Bullet(this.playerPos, bulletVel)); // create new bullet instance, add it to bullets
+        this.bullets.push(new Bullet(this.playerPos, bulletVel)); // create new bullet instance, add it to bullets
         sfxBounce.pause();
         sfxBounce.currentTime = 0; // reset playhead
         sfxBounce.play();
