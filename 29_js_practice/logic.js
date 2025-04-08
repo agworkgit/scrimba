@@ -11,6 +11,7 @@ let x = 0;
 let y = 0;
 const bulletRadius = 10;
 const bulletSpeed = speed * 2;
+const bulletLifetime = 5.0;
 
 // Classes
 
@@ -197,11 +198,12 @@ class Game {
         }
     }
 
-    mouseMove(event) {
-    }
+    // Not required
+    // mouseMove(event) {
+    // }
 
     mouseDown(event) {
-        const mousePos = new v2(event.screenX, event.screenY);
+        const mousePos = new v2(event.clientX, event.clientY); // client works better than screen
         const bulletVel = mousePos
             .sub(this.playerPos)
             .normalise()
@@ -236,9 +238,10 @@ function step(timestamp) {
 }
 window.requestAnimationFrame(step);
 
-document.addEventListener('mousemove', (event) => {
-    game.mouseMove(event);
-});
+// Not required
+// document.addEventListener('mousemove', (event) => {
+//     game.mouseMove(event);
+// });
 
 document.addEventListener('mousedown', (event) => {
     game.mouseDown(event);
