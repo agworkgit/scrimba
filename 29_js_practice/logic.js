@@ -7,16 +7,21 @@ const globalHeight = window.innerHeight;
 
 let x = 0;
 let y = 0;
-const playerColour = 'rgb(0, 140, 255)';
+const playerColour = 'rgb(114, 177, 229)';
 const playerRadius = 48;
 const playerSpeed = 600;
 const bulletColour = 'rgb(255, 215, 96)';
 const bulletRadius = 10;
 const bulletSpeed = playerSpeed * 3;
 const bulletLifetime = 5; // important - prevents memory overflow
-const enemyColour = 'rgb(189, 62, 62)';
+const enemyColour = 'rgb(223, 113, 113)';
 const enemyRadius = playerRadius - 12;
 const enemySpeed = playerSpeed / 3;
+const particleCount = 10;
+const particleRadius = 10;
+const particleMagnitude = bulletSpeed;
+const particleLifetime = 1;
+const particleColour = 'rgb(255, 237, 184)';
 
 // Classes
 
@@ -52,6 +57,12 @@ class v2 {
     }
 }
 
+// Polar Coordinates
+
+function polarCoord(mag, dir) {
+    return new v2(Math.cos(dir) * mag, Math.sin(dir) * mag);
+}
+
 // Tracking Key State - prevents object flying off the screen
 
 const keyState = {
@@ -70,6 +81,38 @@ const directionMap = {
     'KeyD': new v2(1, 0),
     // 'Space': new v2()
 };
+
+// Particles
+
+class Particle {
+    constructor(pos, vel, lifetime, radius) {
+        this.pos = pos;
+        this.vel = vel;
+        this.lifetime = lifetime;
+        this.radius = radius;
+    }
+
+    render(context) {
+        fullCircle(context, this.pos, this.radius, particleColour);
+    }
+
+    update(dt) {
+        this.pos = this.pos.add(this.vel.scale(dt));
+    }
+}
+
+function particleBurst(particles, centre) {
+    for (let i = 0; i < Math.random() * particleCount; i++) {
+        particles.push(new Particle(
+            centre,
+            polarCoord(
+                Math.random() * particleMagnitude,
+                Math.random() * 2 * Math.PI),
+            Math.random() * particleLifetime,
+            Math.random() * particleRadius
+        ));
+    }
+}
 
 // Draw Circle
 
@@ -184,6 +227,8 @@ class TutorialPopup {
     }
 }
 
+// Enemies
+
 class Enemy {
     constructor(pos) {
         this.pos = pos;
@@ -203,6 +248,8 @@ class Enemy {
     }
 }
 
+// Bullets
+
 class Bullet {
     constructor(pos, vel) {
         this.pos = pos;
@@ -220,6 +267,16 @@ class Bullet {
     }
 }
 
+// Render Entities
+
+function renderEntities(context, entities) {
+    for (let entity of entities) {
+        entity.render(context);
+    }
+}
+
+// Game
+
 class Game {
     constructor() {
         this.playerPos = new v2(globalWidth / 2, globalHeight / 2);
@@ -229,6 +286,7 @@ class Game {
         this.playerLearntToMove = false;
         this.bullets = [];
         this.enemies = [];
+        this.particles = [];
 
         this.enemies.push(new Enemy(new v2(100, 100)));
 
@@ -246,11 +304,18 @@ class Game {
 
         this.bullets = this.bullets.filter((bullet) => bullet.lifetime > 0.0);
 
+        for (let particle of this.particles) {
+            particle.update(dt);
+        }
+
+        this.particles = this.particles.filter((particle) => particle.lifetime > 0.0);
+
         for (let enemy of this.enemies) {
             for (let bullet of this.bullets) {
-                if (enemy.pos.dist(bullet.pos) <= bulletRadius + enemyRadius) {
+                if (!enemy.dead && enemy.pos.dist(bullet.pos) <= bulletRadius + enemyRadius) {
                     enemy.dead = true;
                     bullet.lifetime = 0;
+                    particleBurst(this.particles, enemy.pos);
                 }
             }
         }
@@ -269,15 +334,24 @@ class Game {
         // Makes BG transparent - BG colour can now be changed in CSS
         context.clearRect(0, 0, width, height);
 
-        for (let bullet of this.bullets) {
-            bullet.render(context);
-        }
+        renderEntities(context, this.bullets);
+        renderEntities(context, this.particles);
+        renderEntities(context, this.enemies);
+
+        // for (let bullet of this.bullets) {
+        //     bullet.render(context);
+        // }
+
         // Draw Circle
         fullCircle(context, this.playerPos, playerRadius, playerColour);
 
-        for (let enemy of this.enemies) {
-            enemy.render(context);
-        }
+        // for (let particle of this.particles) {
+        //     particle.render(context);
+        // }
+
+        // for (let enemy of this.enemies) {
+        //     enemy.render(context);
+        // }
 
         // Instructions
         this.tutorial.render(context);
