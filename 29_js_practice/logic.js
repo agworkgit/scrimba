@@ -210,6 +210,9 @@ class Game {
             .scale(bulletSpeed);
 
         this.bullets.add(new Bullet(this.playerPos, bulletVel)); // create new bullet instance, add it to bullets
+        sfxBounce.pause();
+        sfxBounce.currentTime = 0; // reset playhead
+        sfxBounce.play();
     }
 }
 
