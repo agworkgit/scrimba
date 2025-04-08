@@ -2,11 +2,15 @@
 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
+const globalWidth = window.innerWidth;
+const globalHeight = window.innerHeight;
 
 const radius = 48;
 const speed = 600;
 let x = 0;
 let y = 0;
+const bulletRadius = 10;
+const bulletSpeed = speed * 2;
 
 // Classes
 
@@ -30,6 +34,11 @@ class v2 {
 
     length() {
         return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    normalise() {
+        const n = this.length();
+        return new v2(this.x / n, this.y / n);
     }
 }
 
@@ -90,46 +99,62 @@ class TutorialPopup {
     }
 
     render(context) {
-        const width = context.canvas.width;
-        const height = context.canvas.height;
-
-        context.translate(width / 2, height / 2);
         context.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
         context.font = '18px VT323';
         context.textAlign = 'center';
-        context.fillText(this.text, 0, height / 3);
+        context.fillText(this.text, globalWidth / 2, globalHeight / 2 + 5);
     }
 
     fadeIn() {
         this.dalpha = 1.0;
-        this.alpha = 0.0;
     }
 
     fadeOut() {
         this.dalpha = -1.0;
-        this.alpha = 1.0;
+    }
+}
+
+class Bullet {
+    constructor(pos, vel) {
+        this.pos = pos;
+        this.vel = vel;
+    }
+
+    update(dt) {
+        this.pos = this.pos.add(this.vel.scale(dt));
+    }
+
+    render(context) {
+        fullCircle(context, this.pos, bulletRadius, 'red');
     }
 }
 
 class Game {
     constructor() {
-        this.pos = new v2(radius + 10, radius + 10);
+        this.playerPos = new v2(globalWidth / 2, globalHeight / 2);
+        this.mousePos = new v2(0, 0);
+        // this.pos = new v2(radius + 10, radius + 10);
         this.vel = new v2(0, 0);
         this.popup = new TutorialPopup("Press 'W', 'S', 'A' or 'D' to move around.");
         this.popup.fadeIn();
-        this.playerLearnedToMove = false;
+        this.playerLearntToMove = false;
+        this.bullets = new Set();
 
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
     }
 
     update(dt) {
-        this.pos = this.pos.add(this.vel.scale(dt));
+        this.playerPos = this.playerPos.add(this.vel.scale(dt));
         this.popup.update(dt);
 
-        if (!this.playerLearnedToMove && this.vel.length() > 0.0) {
-            this.playerLearnedToMove = true;
+        if (!this.playerLearntToMove && this.vel.length() > 0.0) {
+            this.playerLearntToMove = true;
             this.popup.fadeOut();
+        }
+
+        for (let bullet of this.bullets) {
+            bullet.update(dt);
         }
     }
 
@@ -141,10 +166,14 @@ class Game {
         context.clearRect(0, 0, width, height);
 
         // Draw Circle
-        fullCircle(context, this.pos, radius, 'royalblue');
+        fullCircle(context, this.playerPos, radius, 'royalblue');
 
         // Instructions
         this.popup.render(context);
+
+        for (let bullet of this.bullets) {
+            bullet.render(context);
+        }
     }
 
     keyDown(event) {
@@ -166,6 +195,19 @@ class Game {
                 this.vel.x = 0; // Reset horizontal velocity
             }
         }
+    }
+
+    mouseMove(event) {
+    }
+
+    mouseDown(event) {
+        const mousePos = new v2(event.screenX, event.screenY);
+        const bulletVel = mousePos
+            .sub(this.playerPos)
+            .normalise()
+            .scale(bulletSpeed);
+
+        this.bullets.add(new Bullet(this.playerPos, bulletVel)); // create new bullet instance, add it to bullets
     }
 }
 
@@ -193,6 +235,14 @@ function step(timestamp) {
     window.requestAnimationFrame(step);
 }
 window.requestAnimationFrame(step);
+
+document.addEventListener('mousemove', (event) => {
+    game.mouseMove(event);
+});
+
+document.addEventListener('mousedown', (event) => {
+    game.mouseDown(event);
+});
 
 // Audio Calls
 
