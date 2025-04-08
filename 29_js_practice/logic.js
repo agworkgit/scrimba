@@ -78,6 +78,55 @@ sfxBounce.setAttribute('id', 'bounce-sfx');
 sfxBounce.setAttribute('src', './assets/sfx/m4_suppressed.mp3');
 document.body.append(sfxBounce);
 
+// Game State Class
+
+const tutorialState = Object.freeze({
+    learningToMove: 0,
+    learningToShoot: 1,
+    finishedLearning: 2
+});
+
+const tutorialMessages = Object.freeze([
+    "'W', 'S', 'A' or 'D' to move around.",
+    "'LEFT MOUSE CLICK' to shoot.",
+    ""
+]);
+
+class Tutorial {
+    constructor() {
+        this.state = 0;
+        this.popup = new TutorialPopup(tutorialMessages[this.state]);
+        this.popup.fadeIn();
+
+        this.popup.onFadedOut = () => {
+            this.popup.text = tutorialMessages[this.state];
+            this.popup.fadeIn();
+        };
+    }
+
+    update(dt) {
+        this.popup.update(dt);
+    }
+
+    render(context) {
+        this.popup.render(context);
+    }
+
+    playerMoved() {
+        if (this.state == tutorialState.learningToMove) {
+            this.popup.fadeOut();
+            this.state += 1;
+        }
+    }
+
+    playerShot() {
+        if (this.state == tutorialState.learningToShoot) {
+            this.popup.fadeOut();
+            this.state += 1;
+        }
+    }
+};
+
 // Classes
 
 class TutorialPopup {
@@ -85,6 +134,8 @@ class TutorialPopup {
         this.alpha = 0.0;
         this.dalpha = 0.0;
         this.text = text;
+        this.onFadedOut = undefined;
+        this.onFadedIn = undefined;
     }
 
     update(dt) {
@@ -93,9 +144,18 @@ class TutorialPopup {
         if (this.dalpha < 0.0 && this.alpha <= 0.0) {
             this.dalpha = 0.0;
             this.alpha = 0.0;
+
+            if (this.onFadedOut !== undefined) {
+                this.onFadedOut();
+            }
+
         } else if (this.dalpha > 0.0 && this.alpha >= 1.0) {
             this.dalpha = 0.0;
             this.alpha = 1.0;
+
+            if (this.onFadedIn !== undefined) {
+                this.onFadedIn();
+            }
         }
     }
 
@@ -128,7 +188,7 @@ class Bullet {
     }
 
     render(context) {
-        fullCircle(context, this.pos, bulletRadius, 'red');
+        fullCircle(context, this.pos, bulletRadius, 'rgb(255, 215, 96)');
     }
 }
 
@@ -138,8 +198,7 @@ class Game {
         this.mousePos = new v2(0, 0);
         // this.pos = new v2(radius + 10, radius + 10);
         this.vel = new v2(0, 0);
-        this.popup = new TutorialPopup("Press 'W', 'S', 'A' or 'D' to move around.");
-        this.popup.fadeIn();
+        this.tutorial = new Tutorial();
         this.playerLearntToMove = false;
         this.bullets = [];
 
@@ -149,12 +208,7 @@ class Game {
 
     update(dt) {
         this.playerPos = this.playerPos.add(this.vel.scale(dt));
-        this.popup.update(dt);
-
-        if (!this.playerLearntToMove && this.vel.length() > 0.0) {
-            this.playerLearntToMove = true;
-            this.popup.fadeOut();
-        }
+        this.tutorial.update(dt);
 
         for (let bullet of this.bullets) {
             bullet.update(dt);
@@ -174,7 +228,7 @@ class Game {
         fullCircle(context, this.playerPos, radius, 'royalblue');
 
         // Instructions
-        this.popup.render(context);
+        this.tutorial.render(context);
 
         for (let bullet of this.bullets) {
             bullet.render(context);
@@ -185,6 +239,7 @@ class Game {
         if (event.code in directionMap && !keyState[event.code]) {
             keyState[event.code] = true; // Set key state to pressed
             this.vel = this.vel.add(directionMap[event.code].scale(speed));
+            this.tutorial.playerMoved();
         }
     }
 
@@ -192,6 +247,7 @@ class Game {
         if (event.code in directionMap) {
             keyState[event.code] = false; // Set key state to not pressed
             this.vel = this.vel.sub(directionMap[event.code]);
+            this.tutorial.playerMoved();
 
             // Reset the corresponding velocity component to zero else it compounds
             if (event.code === 'KeyW' || event.code === 'KeyS') {
@@ -207,6 +263,7 @@ class Game {
     // }
 
     mouseDown(event) {
+        this.tutorial.playerShot();
         const mousePos = new v2(event.clientX, event.clientY); // client works better than screen
         const bulletVel = mousePos
             .sub(this.playerPos)
