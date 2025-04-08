@@ -17,8 +17,10 @@ const bulletLifetime = 5; // important - prevents memory overflow
 const enemyColour = 'rgb(223, 113, 113)';
 const enemyRadius = playerRadius - 12;
 const enemySpeed = playerSpeed / 3;
+const enemySpawnCooldown = 1;
+const enemySpawnDistance = 500;
 const particleCount = 50;
-const particleRadius = 10;
+const particleRadius = 5;
 const particleMagnitude = bulletSpeed;
 const particleLifetime = 1;
 const particleColour = 'rgb(255, 237, 184)';
@@ -93,7 +95,8 @@ class Particle {
     }
 
     render(context) {
-        fullCircle(context, this.pos, this.radius, particleColour);
+        const particleAlpha = this.lifetime / particleLifetime;
+        fullCircle(context, this.pos, this.radius, `rgba(255, 237, 184, ${particleAlpha})`);
     }
 
     update(dt) {
@@ -289,6 +292,7 @@ class Game {
         this.bullets = [];
         this.enemies = [];
         this.particles = [];
+        this.enemySpawnCooldown = 0;
 
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
@@ -326,8 +330,14 @@ class Game {
 
         this.enemies = this.enemies.filter(enemy => !enemy.dead);
 
-        if (this.tutorial.state == tutorialState.finishedLearning) {
+        // Spawning Enemies
 
+        if (this.tutorial.state == tutorialState.finishedLearning) {
+            this.enemySpawnCooldown -= dt;
+            if (this.enemySpawnCooldown <= 0) {
+                this.spawnEnemy();
+                this.enemySpawnCooldown = enemySpawnCooldown;
+            }
         }
     }
 
@@ -349,16 +359,13 @@ class Game {
         // Draw Circle
         fullCircle(context, this.playerPos, playerRadius, playerColour);
 
-        // for (let particle of this.particles) {
-        //     particle.render(context);
-        // }
-
-        // for (let enemy of this.enemies) {
-        //     enemy.render(context);
-        // }
-
         // Instructions
         this.tutorial.render(context);
+    }
+
+    spawnEnemy() {
+        let dir = Math.random() * 2 * Math.PI;
+        this.enemies.push(new Enemy(this.playerPos.add(polarCoord(enemySpawnDistance, dir))));
     }
 
     keyDown(event) {
