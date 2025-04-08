@@ -2,28 +2,11 @@
 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
-let radius = 64;
+
+const radius = 48;
+const speed = 600;
 let x = 0;
 let y = 0;
-let speed = 600;
-// let dx = speed;
-// let dy = speed;
-
-// Draw Circle
-
-function fullCircle(context, center, radius, colour = 'green') {
-    context.beginPath();
-    context.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
-    context.fillStyle = colour;
-    context.fill();
-}
-
-// Sounds
-
-let sfxBounce = document.createElement('audio');
-sfxBounce.setAttribute('id', 'bounce-sfx');
-sfxBounce.setAttribute('src', './assets/sfx/wall-bounce.mp3');
-document.body.append(sfxBounce);
 
 // Classes
 
@@ -46,12 +29,9 @@ class v2 {
     }
 }
 
-let pos = new v2(x, y);
-let vel = new v2(0, 0);
+// Tracking Key State - prevents object flying off the screen
 
-
-
-let keyState = {
+const keyState = {
     'KeyW': false,
     'KeyS': false,
     'KeyA': false,
@@ -60,13 +40,115 @@ let keyState = {
 
 // Object Direction
 
-let directionMap = {
-    'KeyW': new v2(0, -speed),
-    'KeyS': new v2(0, speed),
-    'KeyA': new v2(-speed, 0),
-    'KeyD': new v2(speed, 0),
+const directionMap = {
+    'KeyW': new v2(0, -1),
+    'KeyS': new v2(0, 1),
+    'KeyA': new v2(-1, 0),
+    'KeyD': new v2(1, 0),
     // 'Space': new v2()
 };
+
+// Draw Circle
+
+function fullCircle(context, center, radius, colour = 'green') {
+    context.beginPath();
+    context.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = colour;
+    context.fill();
+}
+
+// Sounds
+
+let sfxBounce = document.createElement('audio');
+sfxBounce.setAttribute('id', 'bounce-sfx');
+sfxBounce.setAttribute('src', './assets/sfx/wall-bounce.mp3');
+document.body.append(sfxBounce);
+
+// Classes
+
+class TutorialPopup {
+    constructor() {
+        this.alpha = 0.0;
+        this.dalpha = 0.0;
+    }
+
+    update(dt) {
+
+    }
+
+    render(context) {
+
+    }
+
+    fadeIn() {
+        this.dalpha = 1.0;
+        this.alpha = 0.0;
+    }
+
+    fadeOut() {
+        this.dalpha = -1.0;
+        this.alpha = 1.0;
+    }
+}
+
+class Game {
+    constructor() {
+        this.pos = new v2(radius + 10, radius + 10);
+        this.popup = new TutorialPopup();
+        this.vel = new v2(0, 0);
+
+        canvas.addEventListener('keydown', (event) => this.keyDown(event));
+        canvas.addEventListener('keyup', (event) => this.keyUp(event));
+    }
+
+    update(dt) {
+        this.pos = this.pos.add(this.vel.scale(dt));
+        this.popup.update(dt);
+    }
+
+    render(context) {
+        const width = context.canvas.width;
+        const height = context.canvas.height;
+
+        // Makes BG transparent - BG colour can now be changed in CSS
+        context.clearRect(0, 0, width, height);
+
+        // Draw Circle
+        fullCircle(context, this.pos, radius, 'royalblue');
+
+        // Instructions
+        this.popup.render(context);
+
+        context.translate(width / 2, height / 2);
+        context.fillStyle = 'white';
+        context.font = '24px VT323';
+        context.textAlign = 'center';
+        context.fillText('To control the object press W, S, A or D', 0, height / 3);
+    }
+
+    keyDown(event) {
+        if (event.code in directionMap && !keyState[event.code]) {
+            keyState[event.code] = true; // Set key state to pressed
+            this.vel = this.vel.add(directionMap[event.code].scale(speed));
+        }
+    }
+
+    keyUp(event) {
+        if (event.code in directionMap) {
+            keyState[event.code] = false; // Set key state to not pressed
+            this.vel = this.vel.sub(directionMap[event.code]);
+
+            // Reset the corresponding velocity component to zero else it compounds
+            if (event.code === 'KeyW' || event.code === 'KeyS') {
+                this.vel.y = 0; // Reset vertical velocity
+            } else if (event.code === 'KeyA' || event.code === 'KeyD') {
+                this.vel.x = 0; // Reset horizontal velocity
+            }
+        }
+    }
+}
+
+const game = new Game();
 
 // Animation Frames - Event Loop
 
@@ -84,68 +166,25 @@ function step(timestamp) {
     canvas.width = width;
     canvas.height = height;
 
-    // Bounce physics
-
-    if (x + radius >= width || x - radius <= 0) {
-        // dx = dx * -1;
-        sfxBounce.pause();
-        sfxBounce.currentTime = 0; // reset playhead
-        sfxBounce.play();
-    }
-
-    if (y + radius >= height || y - radius <= 0) {
-        // dy = dy * -1;
-        sfxBounce.pause();
-        sfxBounce.currentTime = 0; // reset playhead
-        sfxBounce.play();
-    }
-
-    // Position update logic
-
-    pos = pos.add(vel.scale(dt)); // equal to below
-    // x += dx * dt;
-    // y += dy * dt;
-
-    // Makes BG transparent - BG colour can now be changed in CSS
-    context.clearRect(0, 0, width, height);
-
-    // console.log(elapsed);
-
-    // Instructions
-
-    context.translate(width / 2, height / 2);
-    context.fillStyle = 'white';
-    context.font = '24px VT323';
-    context.textAlign = 'center';
-    context.fillText('To control the object press W, S, A or D', 0, height / 3);
-
-    fullCircle(context, pos, radius, 'royalblue');
+    game.update(dt);
+    game.render(context);
 
     window.requestAnimationFrame(step);
 }
 window.requestAnimationFrame(step);
 
-// Key press events
+// Audio Calls
 
-canvas.addEventListener('keydown', (event) => {
-    // console.log('You pressed', event);
-    if (event.code in directionMap && !keyState[event.code]) {
-        keyState[event.code] = true; // Set key state to pressed
-        vel = vel.add(directionMap[event.code]);
+/*     if (x + radius >= width || x - radius <= 0) {
+        // dx = dx * -1;
+        sfxBounce.pause();
+        sfxBounce.currentTime = 0; // reset playhead
+        sfxBounce.play();
     }
-});
-
-canvas.addEventListener('keyup', (event) => {
-    // console.log('You pressed', event);
-    if (event.code in directionMap) {
-        keyState[event.code] = false; // Set key state to not pressed
-        vel = vel.sub(directionMap[event.code]);
-
-        // Reset the corresponding velocity component to zero else it compounds
-        if (event.code === 'KeyW' || event.code === 'KeyS') {
-            vel.y = 0; // Reset vertical velocity
-        } else if (event.code === 'KeyA' || event.code === 'KeyD') {
-            vel.x = 0; // Reset horizontal velocity
-        }
-    }
-});
+ 
+    if (y + radius >= height || y - radius <= 0) {
+        // dy = dy * -1;
+        sfxBounce.pause();
+        sfxBounce.currentTime = 0; // reset playhead
+        sfxBounce.play();
+    } */
