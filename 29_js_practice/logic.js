@@ -5,13 +5,18 @@ const context = canvas.getContext('2d');
 const globalWidth = window.innerWidth;
 const globalHeight = window.innerHeight;
 
-const playerRadius = 48;
-const playerSpeed = 600;
 let x = 0;
 let y = 0;
+const playerColour = 'rgb(0, 140, 255)';
+const playerRadius = 48;
+const playerSpeed = 600;
+const bulletColour = 'rgb(255, 215, 96)';
 const bulletRadius = 10;
 const bulletSpeed = playerSpeed * 3;
 const bulletLifetime = 5; // important - prevents memory overflow
+const enemyColour = 'rgb(189, 62, 62)';
+const enemyRadius = playerRadius - 12;
+const enemySpeed = playerSpeed / 3;
 
 // Classes
 
@@ -33,13 +38,17 @@ class v2 {
         return new v2(this.x * scalar, this.y * scalar);
     }
 
-    length() {
+    len() {
         return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     normalise() {
-        const n = this.length();
+        const n = this.len();
         return new v2(this.x / n, this.y / n);
+    }
+
+    dist(that) {
+        return this.sub(that).len();
     }
 }
 
@@ -175,6 +184,25 @@ class TutorialPopup {
     }
 }
 
+class Enemy {
+    constructor(pos) {
+        this.pos = pos;
+        this.dead = false;
+    }
+
+    update(dt, followPos) {
+        let vel = followPos
+            .sub(this.pos)
+            .normalise()
+            .scale(enemySpeed * dt);
+        this.pos = this.pos.add(vel);
+    }
+
+    render(context) {
+        fullCircle(context, this.pos, enemyRadius, enemyColour);
+    }
+}
+
 class Bullet {
     constructor(pos, vel) {
         this.pos = pos;
@@ -188,7 +216,7 @@ class Bullet {
     }
 
     render(context) {
-        fullCircle(context, this.pos, bulletRadius, 'rgb(255, 215, 96)');
+        fullCircle(context, this.pos, bulletRadius, bulletColour);
     }
 }
 
@@ -200,6 +228,9 @@ class Game {
         this.tutorial = new Tutorial();
         this.playerLearntToMove = false;
         this.bullets = [];
+        this.enemies = [];
+
+        this.enemies.push(new Enemy(new v2(100, 100)));
 
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
@@ -214,6 +245,21 @@ class Game {
         }
 
         this.bullets = this.bullets.filter((bullet) => bullet.lifetime > 0.0);
+
+        for (let enemy of this.enemies) {
+            for (let bullet of this.bullets) {
+                if (enemy.pos.dist(bullet.pos) <= bulletRadius + enemyRadius) {
+                    enemy.dead = true;
+                    bullet.lifetime = 0;
+                }
+            }
+        }
+
+        for (let enemy of this.enemies) {
+            enemy.update(dt, this.playerPos);
+        }
+
+        this.enemies = this.enemies.filter(enemy => !enemy.dead);
     }
 
     render(context) {
@@ -223,15 +269,18 @@ class Game {
         // Makes BG transparent - BG colour can now be changed in CSS
         context.clearRect(0, 0, width, height);
 
-        // Draw Circle
-        fullCircle(context, this.playerPos, playerRadius, 'royalblue');
-
-        // Instructions
-        this.tutorial.render(context);
-
         for (let bullet of this.bullets) {
             bullet.render(context);
         }
+        // Draw Circle
+        fullCircle(context, this.playerPos, playerRadius, playerColour);
+
+        for (let enemy of this.enemies) {
+            enemy.render(context);
+        }
+
+        // Instructions
+        this.tutorial.render(context);
     }
 
     keyDown(event) {
