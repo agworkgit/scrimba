@@ -292,7 +292,8 @@ class Game {
         this.bullets = [];
         this.enemies = [];
         this.particles = [];
-        this.enemySpawnCooldown = 0;
+        this.enemySpawnRate = enemySpawnCooldown;
+        this.enemySpawnCooldown = this.enemySpawnRate;
 
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
@@ -336,7 +337,8 @@ class Game {
             this.enemySpawnCooldown -= dt;
             if (this.enemySpawnCooldown <= 0) {
                 this.spawnEnemy();
-                this.enemySpawnCooldown = enemySpawnCooldown;
+                this.enemySpawnCooldown = this.enemySpawnRate;
+                this.enemySpawnRate = Math.max(0.01, this.enemySpawnRate - 0.01);
             }
         }
     }
