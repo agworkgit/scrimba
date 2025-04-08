@@ -67,9 +67,10 @@ document.body.append(sfxBounce);
 // Classes
 
 class TutorialPopup {
-    constructor() {
+    constructor(text) {
         this.alpha = 0.0;
         this.dalpha = 0.0;
+        this.text = text;
     }
 
     update(dt) {
@@ -77,7 +78,14 @@ class TutorialPopup {
     }
 
     render(context) {
+        const width = context.canvas.width;
+        const height = context.canvas.height;
 
+        context.translate(width / 2, height / 2);
+        context.fillStyle = 'white';
+        context.font = '18px VT323';
+        context.textAlign = 'center';
+        context.fillText(this.text, 0, height / 3);
     }
 
     fadeIn() {
@@ -94,7 +102,7 @@ class TutorialPopup {
 class Game {
     constructor() {
         this.pos = new v2(radius + 10, radius + 10);
-        this.popup = new TutorialPopup();
+        this.popup = new TutorialPopup("Press 'W', 'S', 'A' or 'D' to move around.");
         this.vel = new v2(0, 0);
 
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
@@ -118,12 +126,6 @@ class Game {
 
         // Instructions
         this.popup.render(context);
-
-        context.translate(width / 2, height / 2);
-        context.fillStyle = 'white';
-        context.font = '24px VT323';
-        context.textAlign = 'center';
-        context.fillText('To control the object press W, S, A or D', 0, height / 3);
     }
 
     keyDown(event) {
