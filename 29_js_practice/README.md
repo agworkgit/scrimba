@@ -1,3 +1,7 @@
+# About
+
+Practicing writing JavaScript while building a 2D shooter game.
+
 # Quick Start
 
 This project is created in vanilla JS, to get it running:

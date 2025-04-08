@@ -6,11 +6,11 @@ const globalWidth = window.innerWidth;
 const globalHeight = window.innerHeight;
 
 const playerRadius = 48;
-const speed = 600;
+const playerSpeed = 600;
 let x = 0;
 let y = 0;
 const bulletRadius = 10;
-const bulletSpeed = speed * 3;
+const bulletSpeed = playerSpeed * 3;
 const bulletLifetime = 5; // important - prevents memory overflow
 
 // Classes
@@ -237,7 +237,7 @@ class Game {
     keyDown(event) {
         if (event.code in directionMap && !keyState[event.code]) {
             keyState[event.code] = true; // Set key state to pressed
-            this.vel = this.vel.add(directionMap[event.code].scale(speed));
+            this.vel = this.vel.add(directionMap[event.code].scale(playerSpeed));
             this.tutorial.playerMoved();
         }
     }
