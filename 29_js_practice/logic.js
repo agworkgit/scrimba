@@ -11,7 +11,7 @@ let x = 0;
 let y = 0;
 const bulletRadius = 10;
 const bulletSpeed = speed * 3;
-const bulletLifetime = 5;
+const bulletLifetime = 5; // important - prevents memory overflow
 
 // Classes
 
@@ -75,7 +75,7 @@ function fullCircle(context, center, radius, colour = 'green') {
 
 let sfxBounce = document.createElement('audio');
 sfxBounce.setAttribute('id', 'bounce-sfx');
-sfxBounce.setAttribute('src', './assets/sfx/wall-bounce.mp3');
+sfxBounce.setAttribute('src', './assets/sfx/m4_suppressed.mp3');
 document.body.append(sfxBounce);
 
 // Classes
