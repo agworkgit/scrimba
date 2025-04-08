@@ -5,7 +5,7 @@ const context = canvas.getContext('2d');
 const globalWidth = window.innerWidth;
 const globalHeight = window.innerHeight;
 
-const radius = 48;
+const playerRadius = 48;
 const speed = 600;
 let x = 0;
 let y = 0;
@@ -64,9 +64,9 @@ const directionMap = {
 
 // Draw Circle
 
-function fullCircle(context, center, radius, colour = 'green') {
+function fullCircle(context, center, playerRadius, colour = 'green') {
     context.beginPath();
-    context.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
+    context.arc(center.x, center.y, playerRadius, 0, 2 * Math.PI, false);
     context.fillStyle = colour;
     context.fill();
 }
@@ -196,7 +196,6 @@ class Game {
     constructor() {
         this.playerPos = new v2(globalWidth / 2, globalHeight / 2);
         this.mousePos = new v2(0, 0);
-        // this.pos = new v2(radius + 10, radius + 10);
         this.vel = new v2(0, 0);
         this.tutorial = new Tutorial();
         this.playerLearntToMove = false;
@@ -225,7 +224,7 @@ class Game {
         context.clearRect(0, 0, width, height);
 
         // Draw Circle
-        fullCircle(context, this.playerPos, radius, 'royalblue');
+        fullCircle(context, this.playerPos, playerRadius, 'royalblue');
 
         // Instructions
         this.tutorial.render(context);
