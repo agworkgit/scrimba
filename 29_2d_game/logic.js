@@ -23,7 +23,7 @@ const particleCount = 50;
 const particleRadius = 5;
 const particleMagnitude = bulletSpeed;
 const particleLifetime = 1;
-const particleColour = 'rgb(255, 237, 184)';
+// const particleColour = 'rgb(255, 237, 184)'; - check particleAlpha
 
 // Classes
 
@@ -84,7 +84,7 @@ const directionMap = {
     // 'Space': new v2()
 };
 
-// Particles
+// Particles - colour comes from rgba + particleAlpha
 
 class Particle {
     constructor(pos, vel, lifetime, radius) {
