@@ -48,8 +48,8 @@ class Colour {
 const playerColour = Colour.hex('#72b1e5');
 const playerRadius = 48;
 const playerSpeed = 600;
-const bulletColour = Colour.hex('#ffd760');
-const bulletRadius = 10;
+const bulletColour = Colour.hex('#e7b80b');
+const bulletRadius = 6;
 const bulletSpeed = playerSpeed * 3;
 const bulletLifetime = 5; // important - prevents memory overflow
 const enemyColour = Colour.hex('#df7171');
@@ -339,7 +339,7 @@ class Bullet {
     }
 
     render(context) {
-        fillCircle(context, this.pos, bulletRadius, bulletColour);
+        fillCircle(context, this.pos, bulletRadius, bulletColour.withAlpha(0.8));
     }
 }
 
@@ -351,15 +351,46 @@ function renderEntities(context, entities) {
     }
 }
 
+// Player class
+
+class Player {
+    constructor(pos) {
+        this.pos = pos;
+    }
+
+    render(context) {
+        fillCircle(context, this.pos, playerRadius, playerColour);
+    }
+
+    update(dt, vel) {
+        this.pos = this.pos.add(vel.scale(dt));
+    }
+
+    shoot(target) {
+        const bulletDir = target
+            .sub(this.pos)
+            .normalise();
+        const bulletVel = bulletDir.scale(bulletSpeed);
+        const bulletPos = this.pos.add(bulletDir.scale(playerRadius + bulletRadius));
+
+        // Sfx
+
+        sfxBounce.pause();
+        sfxBounce.currentTime = 0; // reset playhead
+        sfxBounce.play();
+
+        return new Bullet(bulletPos, bulletVel); // create new bullet instance, add it to bullets
+    }
+}
+
 // Game
 
 class Game {
     constructor() {
-        this.playerPos = new v2(globalWidth / 2, globalHeight / 2);
+        this.player = new Player(new v2(globalWidth / 2, globalHeight / 2));
         this.mousePos = new v2(0, 0);
         this.vel = new v2(0, 0);
         this.tutorial = new Tutorial();
-        this.playerLearntToMove = false;
         this.bullets = [];
         this.enemies = [];
         this.particles = [];
@@ -367,8 +398,8 @@ class Game {
         this.enemySpawnCooldown = this.enemySpawnRate;
         this.paused = false;
 
-        canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
+        canvas.addEventListener('keydown', (event) => this.keyDown(event));
     }
 
     update(dt) {
@@ -376,7 +407,7 @@ class Game {
             return;
         }
 
-        this.playerPos = this.playerPos.add(this.vel.scale(dt));
+        this.player.update(dt, this.vel);
         this.tutorial.update(dt);
 
         for (let bullet of this.bullets) {
@@ -402,7 +433,7 @@ class Game {
         }
 
         for (let enemy of this.enemies) {
-            enemy.update(dt, this.playerPos);
+            enemy.update(dt, this.player.pos);
         }
 
         this.enemies = this.enemies.filter(enemy => !enemy.dead);
@@ -430,12 +461,8 @@ class Game {
         renderEntities(context, this.particles);
         renderEntities(context, this.enemies);
 
-        // for (let bullet of this.bullets) {
-        //     bullet.render(context);
-        // }
-
         // Draw Circle
-        fillCircle(context, this.playerPos, playerRadius, playerColour);
+        this.player.render(context);
 
         // Prevent tutorial render if paused
         if (!this.paused) {
@@ -448,7 +475,7 @@ class Game {
 
     spawnEnemy() {
         let dir = Math.random() * 2 * Math.PI;
-        this.enemies.push(new Enemy(this.playerPos.add(polarCoord(enemySpawnDistance, dir))));
+        this.enemies.push(new Enemy(this.player.pos.add(polarCoord(enemySpawnDistance, dir))));
     }
 
     togglePause() {
@@ -485,27 +512,14 @@ class Game {
         }
     }
 
-    // Not required
-    // mouseMove(event) {
-    // }
-
     mouseDown(event) {
         if (this.paused) {
             return;
-        } else {
-            this.tutorial.playerShot();
-            const mousePos = new v2(event.clientX, event.clientY); // client works better than screen
-            const bulletDir = mousePos
-                .sub(this.playerPos)
-                .normalise();
-            const bulletVel = bulletDir.scale(bulletSpeed);
-            const bulletPos = this.playerPos.add(bulletDir.scale(playerRadius + bulletRadius));
-
-            this.bullets.push(new Bullet(bulletPos, bulletVel)); // create new bullet instance, add it to bullets
-            sfxBounce.pause();
-            sfxBounce.currentTime = 0; // reset playhead
-            sfxBounce.play();
         }
+
+        this.tutorial.playerShot();
+        const mousePos = new v2(event.clientX, event.clientY); // client works better than screen
+        this.bullets.push(this.player.shoot(mousePos));
     }
 }
 
@@ -534,27 +548,6 @@ function step(timestamp) {
 }
 window.requestAnimationFrame(step);
 
-// Not required
-// document.addEventListener('mousemove', (event) => {
-//     game.mouseMove(event);
-// });
-
 document.addEventListener('mousedown', (event) => {
     game.mouseDown(event);
 });
-
-// Audio Calls
-
-/*     if (x + radius >= width || x - radius <= 0) {
-        // dx = dx * -1;
-        sfxBounce.pause();
-        sfxBounce.currentTime = 0; // reset playhead
-        sfxBounce.play();
-    }
- 
-    if (y + radius >= height || y - radius <= 0) {
-        // dy = dy * -1;
-        sfxBounce.pause();
-        sfxBounce.currentTime = 0; // reset playhead
-        sfxBounce.play();
-    } */
