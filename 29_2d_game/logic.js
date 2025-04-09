@@ -26,6 +26,11 @@ class Colour {
         return new Colour(this.r, this.g, this.b, a);
     }
 
+    grayScale() {
+        let sourceColour = Math.max(this.r, this.g, this.b);
+        return new Colour(sourceColour, sourceColour, sourceColour, this.a);
+    }
+
     static hex(hexcolour) {
         let matches = hexcolour.match(/#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i); // returns 3 groups of 2
         if (matches) {
