@@ -549,7 +549,7 @@ class Game {
             this.tutorial.render(context);
         }
 
-        fillRect(context, 0, 0, globalWidth * (this.player.health / playerMaxHealth), healthBarHeight, healthBarColour);
+        fillRect(context, globalWidth / 4, 20, (globalWidth / 2) * (this.player.health / playerMaxHealth), healthBarHeight, healthBarColour);
     }
 
     spawnEnemy() {
