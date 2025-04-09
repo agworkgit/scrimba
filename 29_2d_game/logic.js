@@ -218,7 +218,7 @@ class TutorialPopup {
 
     render(context) {
         context.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-        context.font = '18px VT323';
+        context.font = '24px VT323';
         context.textAlign = 'center';
         context.fillText(this.text, globalWidth / 2, globalHeight / 2 + 5);
     }
@@ -400,12 +400,13 @@ class Game {
     mouseDown(event) {
         this.tutorial.playerShot();
         const mousePos = new v2(event.clientX, event.clientY); // client works better than screen
-        const bulletVel = mousePos
+        const bulletDir = mousePos
             .sub(this.playerPos)
-            .normalise()
-            .scale(bulletSpeed);
+            .normalise();
+        const bulletVel = bulletDir.scale(bulletSpeed);
+        const bulletPos = this.playerPos.add(bulletDir.scale(playerRadius + bulletRadius));
 
-        this.bullets.push(new Bullet(this.playerPos, bulletVel)); // create new bullet instance, add it to bullets
+        this.bullets.push(new Bullet(bulletPos, bulletVel)); // create new bullet instance, add it to bullets
         sfxBounce.pause();
         sfxBounce.currentTime = 0; // reset playhead
         sfxBounce.play();
