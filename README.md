@@ -1,6 +1,6 @@
 # Scrimba Notes & Projects
 
-The notes and projects I create while undertaking the Frontend Path at Scriba. More will be added as I progress through the course.
+Notes and projects from the Scrimba Frontend Path, and extra-curricular activities surrounding the same topics studied.
 
 ## Project 27 (Solo Project)
 
