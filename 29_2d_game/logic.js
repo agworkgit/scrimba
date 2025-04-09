@@ -31,6 +31,10 @@ class Colour {
         return new Colour(sourceColour, sourceColour, sourceColour, this.a);
     }
 
+    invert() {
+        return new Colour(1.0 - this.r, 1.0 - this.g, 1.0 - this.b, this.a);
+    }
+
     static hex(hexcolour) {
         let matches = hexcolour.match(/#([0-9a-g]{2})([0-9a-g]{2})([0-9a-g]{2})/i); // returns 3 groups of 2
         if (matches) {
@@ -45,24 +49,84 @@ class Colour {
     }
 }
 
+// b&w for pause screen
+
+function grayScaleFilter(colour) {
+    return colour.grayScale();
+}
+
+// id filter
+
+function idFilter(colour) {
+    return colour;
+}
+
+let globalFillFilter = idFilter;
+
+// Draw Shapes
+
+function fillCircle(context, center, playerRadius, colour) {
+    context.beginPath();
+    context.arc(center.x, center.y, playerRadius, 0, 2 * Math.PI, false);
+    context.fillStyle = globalFillFilter(colour).toRgba();
+    context.fill();
+}
+
+// For health bar
+
+function fillRect(context, x, y, w, h, colour) {
+    context.fillStyle = globalFillFilter(colour).toRgba();
+    context.fillRect(x, y, w, h);
+}
+
+// Sounds
+
+let sfxBounce = document.createElement('audio');
+sfxBounce.setAttribute('id', 'bounce-sfx');
+sfxBounce.setAttribute('src', './assets/sfx/m4_suppressed.mp3');
+document.body.append(sfxBounce);
+
+let sfxPlayerHit = document.createElement('audio');
+sfxPlayerHit.setAttribute('id', 'player-hit-sfx');
+sfxPlayerHit.setAttribute('src', './assets/sfx/player_hit.mp3');
+document.body.append(sfxPlayerHit);
+
+// Pause text
+
+function fillMessage(context, text, colour) {
+    context.fillStyle = colour.toRgba();
+    context.font = '24px VT323';
+    context.textAlign = 'center';
+    context.fillText(text, globalWidth / 2, globalHeight / 2 + 5);
+}
+
 const playerColour = Colour.hex('#72b1e5');
 const playerRadius = 48;
 const playerSpeed = 600;
+const playerMaxHealth = 100;
+
 const bulletColour = Colour.hex('#e7b80b');
 const bulletRadius = 6;
 const bulletSpeed = playerSpeed * 3;
 const bulletLifetime = 5; // important - prevents memory overflow
+
 const enemyColour = Colour.hex('#df7171');
 const enemyRadius = playerRadius - 12;
 const enemySpeed = playerSpeed / 3;
 const enemySpawnCooldown = 1;
 const enemySpawnDistance = 500;
+const enemyDamage = playerMaxHealth / 5;
+
 const particleCount = 50;
 const particleRadius = 5;
 const particleMagnitude = bulletSpeed;
 const particleLifetime = 1;
 const particleColour = Colour.hex('#ffedb8');
+
 const messageColour = Colour.hex('#ffffff');
+
+const healthBarHeight = 15;
+const healthBarColour = Colour.hex('#51bb51');
 
 // Handle Window Resize
 
@@ -167,36 +231,6 @@ function particleBurst(particles, centre) {
     }
 }
 
-// b&w for pause screen
-
-function grayScaleFilter(colour) {
-    return colour.grayScale();
-}
-
-// id filter
-
-function idFilter(colour) {
-    return colour;
-}
-
-let globalFillCircleFilter = idFilter;
-
-// Draw Circle
-
-function fillCircle(context, center, playerRadius, colour) {
-    context.beginPath();
-    context.arc(center.x, center.y, playerRadius, 0, 2 * Math.PI, false);
-    context.fillStyle = globalFillCircleFilter(colour).toRgba();
-    context.fill();
-}
-
-// Sounds
-
-let sfxBounce = document.createElement('audio');
-sfxBounce.setAttribute('id', 'bounce-sfx');
-sfxBounce.setAttribute('src', './assets/sfx/m4_suppressed.mp3');
-document.body.append(sfxBounce);
-
 // Game State Class
 
 const tutorialState = Object.freeze({
@@ -245,15 +279,6 @@ class Tutorial {
         }
     }
 };
-
-// Pause text
-
-function fillMessage(context, text, colour) {
-    context.fillStyle = colour.toRgba();
-    context.font = '24px VT323';
-    context.textAlign = 'center';
-    context.fillText(text, globalWidth / 2, globalHeight / 2 + 5);
-}
 
 // Classes
 
@@ -354,6 +379,8 @@ function renderEntities(context, entities) {
 // Player class
 
 class Player {
+    health = playerMaxHealth;
+
     constructor(pos) {
         this.pos = pos;
     }
@@ -380,6 +407,16 @@ class Player {
         sfxBounce.play();
 
         return new Bullet(bulletPos, bulletVel); // create new bullet instance, add it to bullets
+    }
+
+    damage(value) {
+        this.health = Math.max(this.health - value, 0.0);
+
+        // Sfx
+
+        sfxPlayerHit.pause();
+        sfxPlayerHit.currentTime = 0; // reset playhead
+        sfxPlayerHit.play();
     }
 }
 
@@ -423,10 +460,22 @@ class Game {
         this.particles = this.particles.filter((particle) => particle.lifetime > 0.0);
 
         for (let enemy of this.enemies) {
-            for (let bullet of this.bullets) {
-                if (!enemy.dead && enemy.pos.dist(bullet.pos) <= bulletRadius + enemyRadius) {
+            if (!enemy.dead) {
+                for (let bullet of this.bullets) {
+                    if (enemy.pos.dist(bullet.pos) <= bulletRadius + enemyRadius) {
+                        enemy.dead = true;
+                        bullet.lifetime = 0;
+                        particleBurst(this.particles, enemy.pos);
+                    }
+                }
+            }
+
+            // Damage player
+
+            if (!enemy.dead) {
+                if (enemy.pos.dist(this.player.pos) <= playerRadius + enemyRadius) {
                     enemy.dead = true;
-                    bullet.lifetime = 0;
+                    this.player.damage(enemyDamage);
                     particleBurst(this.particles, enemy.pos);
                 }
             }
@@ -471,6 +520,8 @@ class Game {
         } else {
             fillMessage(context, "Game paused, press 'SPACE' to resume", messageColour);
         }
+
+        fillRect(context, 0, 0, globalWidth * (this.player.health / playerMaxHealth), healthBarHeight, healthBarColour);
     }
 
     spawnEnemy() {
@@ -481,9 +532,9 @@ class Game {
     togglePause() {
         this.paused = !this.paused;
         if (this.paused) {
-            globalFillCircleFilter = grayScaleFilter;
+            globalFillFilter = grayScaleFilter;
         } else {
-            globalFillCircleFilter = idFilter;
+            globalFillFilter = idFilter;
         }
     }
 
