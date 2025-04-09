@@ -81,21 +81,26 @@ function fillRect(context, x, y, w, h, colour) {
 
 // Sounds
 
-let sfxBounce = document.createElement('audio');
-sfxBounce.setAttribute('id', 'bounce-sfx');
-sfxBounce.setAttribute('src', './assets/sfx/m4_suppressed.mp3');
-document.body.append(sfxBounce);
+const sfxBullet = document.createElement('audio');
+sfxBullet.setAttribute('id', 'bounce-sfx');
+sfxBullet.setAttribute('src', './assets/sfx/m4_suppressed.mp3');
+document.body.append(sfxBullet);
 
-let sfxPlayerHit = document.createElement('audio');
+const sfxPlayerHit = document.createElement('audio');
 sfxPlayerHit.setAttribute('id', 'player-hit-sfx');
 sfxPlayerHit.setAttribute('src', './assets/sfx/player_hit.mp3');
 document.body.append(sfxPlayerHit);
+
+const sfxPlayerDeath = document.createElement('audio');
+sfxPlayerDeath.setAttribute('id', 'player-death-sfx');
+sfxPlayerDeath.setAttribute('src', './assets/sfx/player_death.mp3');
+document.body.append(sfxPlayerDeath);
 
 // Pause text
 
 function fillMessage(context, text, colour) {
     context.fillStyle = colour.toRgba();
-    context.font = '24px VT323';
+    context.font = '32px VT323';
     context.textAlign = 'center';
     context.fillText(text, globalWidth / 2, globalHeight / 2 + 5);
 }
@@ -121,7 +126,7 @@ const particleCount = 50;
 const particleRadius = 5;
 const particleMagnitude = bulletSpeed;
 const particleLifetime = 1;
-const particleColour = Colour.hex('#ffedb8');
+// const particleColour = Colour.hex('#ffedb8'); - replaced by playerColour and enemyColour for particleBurst
 
 const messageColour = Colour.hex('#ffffff');
 
@@ -199,16 +204,17 @@ const directionMap = {
 // Particles - colour comes from rgba + particleAlpha (replaced by Colour class methods)
 
 class Particle {
-    constructor(pos, vel, lifetime, radius) {
+    constructor(pos, vel, lifetime, radius, colour) {
         this.pos = pos;
         this.vel = vel;
         this.lifetime = lifetime;
         this.radius = radius;
+        this.colour = colour;
     }
 
     render(context) {
         const particleAlpha = this.lifetime / particleLifetime;
-        fillCircle(context, this.pos, this.radius, particleColour.withAlpha(particleAlpha));
+        fillCircle(context, this.pos, this.radius, this.colour.withAlpha(particleAlpha));
     }
 
     update(dt) {
@@ -217,7 +223,7 @@ class Particle {
     }
 }
 
-function particleBurst(particles, centre) {
+function particleBurst(particles, centre, colour) {
     const particleLength = Math.random() * particleCount;
     for (let i = 0; i < particleLength; i++) {
         particles.push(new Particle(
@@ -226,7 +232,8 @@ function particleBurst(particles, centre) {
                 Math.random() * particleMagnitude,
                 Math.random() * 2 * Math.PI),
             Math.random() * particleLifetime,
-            (Math.random() * particleRadius) + 1
+            (Math.random() * particleRadius) + 5,
+            colour
         ));
     }
 }
@@ -386,7 +393,9 @@ class Player {
     }
 
     render(context) {
-        fillCircle(context, this.pos, playerRadius, playerColour);
+        if (this.health > 0) {
+            fillCircle(context, this.pos, playerRadius, playerColour);
+        }
     }
 
     update(dt, vel) {
@@ -402,9 +411,9 @@ class Player {
 
         // Sfx
 
-        sfxBounce.pause();
-        sfxBounce.currentTime = 0; // reset playhead
-        sfxBounce.play();
+        sfxBullet.pause();
+        sfxBullet.currentTime = 0; // reset playhead
+        sfxBullet.play();
 
         return new Bullet(bulletPos, bulletVel); // create new bullet instance, add it to bullets
     }
@@ -414,9 +423,11 @@ class Player {
 
         // Sfx
 
-        sfxPlayerHit.pause();
-        sfxPlayerHit.currentTime = 0; // reset playhead
-        sfxPlayerHit.play();
+        if (this.health > 1) {
+            sfxPlayerHit.pause();
+            sfxPlayerHit.currentTime = 0; // reset playhead
+            sfxPlayerHit.play();
+        }
     }
 }
 
@@ -444,6 +455,12 @@ class Game {
             return;
         }
 
+        // Bullet time
+
+        if (this.player.health <= 0.0) {
+            dt /= 50;
+        }
+
         this.player.update(dt, this.vel);
         this.tutorial.update(dt);
 
@@ -465,18 +482,27 @@ class Game {
                     if (enemy.pos.dist(bullet.pos) <= bulletRadius + enemyRadius) {
                         enemy.dead = true;
                         bullet.lifetime = 0;
-                        particleBurst(this.particles, enemy.pos);
+                        particleBurst(this.particles, enemy.pos, enemyColour);
                     }
                 }
             }
 
             // Damage player
 
-            if (!enemy.dead) {
+            if (this.player.health > 0 && !enemy.dead) {
                 if (enemy.pos.dist(this.player.pos) <= playerRadius + enemyRadius) {
-                    enemy.dead = true;
                     this.player.damage(enemyDamage);
-                    particleBurst(this.particles, enemy.pos);
+                    if (this.player.health <= 0) {
+                        globalFillFilter = grayScaleFilter;
+
+                        // Death Sfx
+
+                        sfxPlayerDeath.pause();
+                        sfxPlayerDeath.currentTime = 0; // reset playhead
+                        sfxPlayerDeath.play();
+                    }
+                    enemy.dead = true;
+                    particleBurst(this.particles, enemy.pos, playerColour);
                 }
             }
         }
@@ -514,11 +540,13 @@ class Game {
         this.player.render(context);
 
         // Prevent tutorial render if paused
-        if (!this.paused) {
+        if (this.paused) {
             // Instructions
-            this.tutorial.render(context);
-        } else {
             fillMessage(context, "Game paused, press 'SPACE' to resume", messageColour);
+        } else if (this.player.health <= 0) {
+            fillMessage(context, "Fading into oblivion, 'F5 on Windows or CMD+R on Mac' to restart", enemyColour);
+        } else {
+            this.tutorial.render(context);
         }
 
         fillRect(context, 0, 0, globalWidth * (this.player.health / playerMaxHealth), healthBarHeight, healthBarColour);
@@ -565,6 +593,12 @@ class Game {
 
     mouseDown(event) {
         if (this.paused) {
+            return;
+        }
+
+        // if the player dies stop shooting
+
+        if (this.player.health <= 0) {
             return;
         }
 
