@@ -9,3 +9,4 @@
 -   MIT License - https://choosealicense.com/licenses/mit/#
 -   State Machine (Used for the into tutorial) - https://developer.mozilla.org/en-US/docs/Glossary/State_machine
 -   State Machine in JS - https://www.youtube.com/watch?v=0NkfCi-hKCc
+-   Window Resize API - https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event

@@ -2,19 +2,52 @@
 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
-const globalWidth = window.innerWidth;
-const globalHeight = window.innerHeight;
+let globalWidth = window.innerWidth;
+let globalHeight = window.innerHeight;
 
 let x = 0;
 let y = 0;
-const playerColour = 'rgb(114, 177, 229)';
+
+// Colour Class
+
+class Colour {
+    constructor(r, g, b, a) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.a = a;
+    }
+
+    toRgba() {
+        return `rgba(${this.r * 255}, ${this.g * 255}, ${this.b * 255}, ${this.a})`; // this.a is an exception (works on 0 to 1)
+    }
+
+    withAlhpa(a) {
+        return new Colour(this.r, this.g, this.b, a);
+    }
+
+    static hex(hexcolour) {
+        let matches = hexcolour.match(/#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i); // returns 3 groups of 2
+        if (matches) {
+            let [, r, g, b] = matches;
+            return new Colour(parseInt(r, 16) / 255,
+                parseInt(g, 16) / 255,
+                parseInt(b, 16) / 255,
+                1.0);
+        } else {
+            throw new Error(`Could not parse ${hexcolour} as colour`, console.error);
+        }
+    }
+}
+
+const playerColour = Colour.hex('#72b1e5');
 const playerRadius = 48;
 const playerSpeed = 600;
-const bulletColour = 'rgb(255, 215, 96)';
+const bulletColour = Colour.hex('#ffd760');
 const bulletRadius = 10;
 const bulletSpeed = playerSpeed * 3;
 const bulletLifetime = 5; // important - prevents memory overflow
-const enemyColour = 'rgb(223, 113, 113)';
+const enemyColour = Colour.hex('#df7171');
 const enemyRadius = playerRadius - 12;
 const enemySpeed = playerSpeed / 3;
 const enemySpawnCooldown = 1;
@@ -23,7 +56,16 @@ const particleCount = 50;
 const particleRadius = 5;
 const particleMagnitude = bulletSpeed;
 const particleLifetime = 1;
-// const particleColour = 'rgb(255, 237, 184)'; - check particleAlpha
+const particleColour = Colour.hex('#ffedb8');
+
+// Handle Window Resize
+
+function handleWindowResize() {
+    globalWidth = window.innerWidth;
+    globalHeight = window.innerHeight;
+}
+
+window.onresize = handleWindowResize;
 
 // Classes
 
@@ -84,7 +126,7 @@ const directionMap = {
     // 'Space': new v2()
 };
 
-// Particles - colour comes from rgba + particleAlpha
+// Particles - colour comes from rgba + particleAlpha (replaced by Colour class methods)
 
 class Particle {
     constructor(pos, vel, lifetime, radius) {
@@ -96,7 +138,7 @@ class Particle {
 
     render(context) {
         const particleAlpha = this.lifetime / particleLifetime;
-        fullCircle(context, this.pos, this.radius, `rgba(255, 237, 184, ${particleAlpha})`);
+        fullCircle(context, this.pos, this.radius, particleColour.withAlhpa(particleAlpha));
     }
 
     update(dt) {
@@ -121,10 +163,10 @@ function particleBurst(particles, centre) {
 
 // Draw Circle
 
-function fullCircle(context, center, playerRadius, colour = 'green') {
+function fullCircle(context, center, playerRadius, colour) {
     context.beginPath();
     context.arc(center.x, center.y, playerRadius, 0, 2 * Math.PI, false);
-    context.fillStyle = colour;
+    context.fillStyle = colour.toRgba();
     context.fill();
 }
 
@@ -294,12 +336,17 @@ class Game {
         this.particles = [];
         this.enemySpawnRate = enemySpawnCooldown;
         this.enemySpawnCooldown = this.enemySpawnRate;
+        this.paused = false;
 
         canvas.addEventListener('keydown', (event) => this.keyDown(event));
         canvas.addEventListener('keyup', (event) => this.keyUp(event));
     }
 
     update(dt) {
+        if (this.paused) {
+            return;
+        }
+
         this.playerPos = this.playerPos.add(this.vel.scale(dt));
         this.tutorial.update(dt);
 
@@ -370,11 +417,17 @@ class Game {
         this.enemies.push(new Enemy(this.playerPos.add(polarCoord(enemySpawnDistance, dir))));
     }
 
+    togglePause() {
+        this.paused = !this.paused;
+    }
+
     keyDown(event) {
         if (event.code in directionMap && !keyState[event.code]) {
             keyState[event.code] = true; // Set key state to pressed
             this.vel = this.vel.add(directionMap[event.code].scale(playerSpeed));
             this.tutorial.playerMoved();
+        } else if (event.code === 'Space') {
+            this.togglePause();
         }
     }
 
