@@ -100,7 +100,15 @@ document.body.append(sfxPlayerDeath);
 
 function fillMessage(context, text, colour) {
     context.fillStyle = colour.toRgba();
-    context.font = '32px VT323';
+
+    // If small screen update font
+
+    if (globalWidth < 640) {
+        context.font = `${smallFont} VT323`;
+    } else {
+        context.font = `${normalFont} VT323`;
+    }
+
     context.textAlign = 'center';
     context.fillText(text, globalWidth / 2, globalHeight / 2 + 5);
 }
@@ -129,6 +137,8 @@ const particleLifetime = 1;
 // const particleColour = Colour.hex('#ffedb8'); - replaced by playerColour and enemyColour for particleBurst
 
 const messageColour = Colour.hex('#ffffff');
+const smallFont = '18px';
+const normalFont = '32px';
 
 const healthBarHeight = 15;
 const healthBarColour = Colour.hex('#51bb51');
@@ -321,7 +331,15 @@ class TutorialPopup {
 
     render(context) {
         context.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-        context.font = '24px VT323';
+
+        // If small screen update font
+
+        if (globalWidth < 640) {
+            context.font = `${smallFont} VT323`;
+        } else {
+            context.font = `${normalFont} VT323`;
+        }
+
         context.textAlign = 'center';
         context.fillText(this.text, globalWidth / 2, globalHeight / 2 + 5);
     }
@@ -544,7 +562,7 @@ class Game {
             // Instructions
             fillMessage(context, "Game paused, press 'SPACE' to resume", messageColour);
         } else if (this.player.health <= 0) {
-            fillMessage(context, "Fading into oblivion, 'F5 on Windows or CMD+R on Mac' to restart", enemyColour);
+            fillMessage(context, "Fading into oblivion, 'F5 (Win) or CMD+R (Mac)' to restart", enemyColour);
         } else {
             this.tutorial.render(context);
         }
