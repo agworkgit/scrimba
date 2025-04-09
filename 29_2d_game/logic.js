@@ -22,17 +22,17 @@ class Colour {
         return `rgba(${this.r * 255}, ${this.g * 255}, ${this.b * 255}, ${this.a})`; // this.a is an exception (works on 0 to 1)
     }
 
-    withAlhpa(a) {
+    withAlpha(a) {
         return new Colour(this.r, this.g, this.b, a);
     }
 
     grayScale() {
-        let sourceColour = Math.max(this.r, this.g, this.b);
+        let sourceColour = Math.min(this.r, this.g, this.b);
         return new Colour(sourceColour, sourceColour, sourceColour, this.a);
     }
 
     static hex(hexcolour) {
-        let matches = hexcolour.match(/#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i); // returns 3 groups of 2
+        let matches = hexcolour.match(/#([0-9a-g]{2})([0-9a-g]{2})([0-9a-g]{2})/i); // returns 3 groups of 2
         if (matches) {
             let [, r, g, b] = matches;
             return new Colour(parseInt(r, 16) / 255,
@@ -62,6 +62,7 @@ const particleRadius = 5;
 const particleMagnitude = bulletSpeed;
 const particleLifetime = 1;
 const particleColour = Colour.hex('#ffedb8');
+const messageColour = Colour.hex('#ffffff');
 
 // Handle Window Resize
 
@@ -143,7 +144,7 @@ class Particle {
 
     render(context) {
         const particleAlpha = this.lifetime / particleLifetime;
-        fullCircle(context, this.pos, this.radius, particleColour.withAlhpa(particleAlpha));
+        fillCircle(context, this.pos, this.radius, particleColour.withAlpha(particleAlpha));
     }
 
     update(dt) {
@@ -166,12 +167,26 @@ function particleBurst(particles, centre) {
     }
 }
 
+// b&w for pause screen
+
+function grayScaleFilter(colour) {
+    return colour.grayScale();
+}
+
+// id filter
+
+function idFilter(colour) {
+    return colour;
+}
+
+let globalFillCircleFilter = idFilter;
+
 // Draw Circle
 
-function fullCircle(context, center, playerRadius, colour) {
+function fillCircle(context, center, playerRadius, colour) {
     context.beginPath();
     context.arc(center.x, center.y, playerRadius, 0, 2 * Math.PI, false);
-    context.fillStyle = colour.toRgba();
+    context.fillStyle = globalFillCircleFilter(colour).toRgba();
     context.fill();
 }
 
@@ -230,6 +245,15 @@ class Tutorial {
         }
     }
 };
+
+// Pause text
+
+function fillMessage(context, text, colour) {
+    context.fillStyle = colour.toRgba();
+    context.font = '24px VT323';
+    context.textAlign = 'center';
+    context.fillText(text, globalWidth / 2, globalHeight / 2 + 5);
+}
 
 // Classes
 
@@ -296,7 +320,7 @@ class Enemy {
     }
 
     render(context) {
-        fullCircle(context, this.pos, enemyRadius, enemyColour);
+        fillCircle(context, this.pos, enemyRadius, enemyColour);
     }
 }
 
@@ -315,7 +339,7 @@ class Bullet {
     }
 
     render(context) {
-        fullCircle(context, this.pos, bulletRadius, bulletColour);
+        fillCircle(context, this.pos, bulletRadius, bulletColour);
     }
 }
 
@@ -411,10 +435,15 @@ class Game {
         // }
 
         // Draw Circle
-        fullCircle(context, this.playerPos, playerRadius, playerColour);
+        fillCircle(context, this.playerPos, playerRadius, playerColour);
 
-        // Instructions
-        this.tutorial.render(context);
+        // Prevent tutorial render if paused
+        if (!this.paused) {
+            // Instructions
+            this.tutorial.render(context);
+        } else {
+            fillMessage(context, "Game paused, press 'SPACE' to resume", messageColour);
+        }
     }
 
     spawnEnemy() {
@@ -424,6 +453,11 @@ class Game {
 
     togglePause() {
         this.paused = !this.paused;
+        if (this.paused) {
+            globalFillCircleFilter = grayScaleFilter;
+        } else {
+            globalFillCircleFilter = idFilter;
+        }
     }
 
     keyDown(event) {
@@ -456,18 +490,22 @@ class Game {
     // }
 
     mouseDown(event) {
-        this.tutorial.playerShot();
-        const mousePos = new v2(event.clientX, event.clientY); // client works better than screen
-        const bulletDir = mousePos
-            .sub(this.playerPos)
-            .normalise();
-        const bulletVel = bulletDir.scale(bulletSpeed);
-        const bulletPos = this.playerPos.add(bulletDir.scale(playerRadius + bulletRadius));
+        if (this.paused) {
+            return;
+        } else {
+            this.tutorial.playerShot();
+            const mousePos = new v2(event.clientX, event.clientY); // client works better than screen
+            const bulletDir = mousePos
+                .sub(this.playerPos)
+                .normalise();
+            const bulletVel = bulletDir.scale(bulletSpeed);
+            const bulletPos = this.playerPos.add(bulletDir.scale(playerRadius + bulletRadius));
 
-        this.bullets.push(new Bullet(bulletPos, bulletVel)); // create new bullet instance, add it to bullets
-        sfxBounce.pause();
-        sfxBounce.currentTime = 0; // reset playhead
-        sfxBounce.play();
+            this.bullets.push(new Bullet(bulletPos, bulletVel)); // create new bullet instance, add it to bullets
+            sfxBounce.pause();
+            sfxBounce.currentTime = 0; // reset playhead
+            sfxBounce.play();
+        }
     }
 }
 
