@@ -74,6 +74,12 @@ function fillCircle(context, center, playerRadius, colour) {
 
 // For health bar
 
+function strokeRect(context, x, y, w, h) {
+    context.strokeStyle = "white";
+    context.lineWidth = 3;
+    context.strokeRect(x, y, w, h);
+}
+
 function fillRect(context, x, y, w, h, colour) {
     context.fillStyle = globalFillFilter(colour).toRgba();
     context.fillRect(x, y, w, h);
@@ -567,7 +573,9 @@ class Game {
             this.tutorial.render(context);
         }
 
+        // Health bar render
         fillRect(context, globalWidth / 4, 20, (globalWidth / 2) * (this.player.health / playerMaxHealth), healthBarHeight, healthBarColour);
+        strokeRect(context, globalWidth / 4, 20, globalWidth / 2, healthBarHeight); // frame
     }
 
     spawnEnemy() {
