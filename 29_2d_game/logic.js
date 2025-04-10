@@ -65,9 +65,9 @@ let globalFillFilter = idFilter;
 
 // Draw Shapes
 
-function fillCircle(context, center, playerMaxRadius, colour) {
+function fillCircle(context, center, playerRadius, colour) {
     context.beginPath();
-    context.arc(center.x, center.y, playerMaxRadius, 0, 2 * Math.PI, false);
+    context.arc(center.x, center.y, playerRadius, 0, 2 * Math.PI, false);
     context.fillStyle = globalFillFilter(colour).toRgba();
     context.fill();
 }
@@ -120,7 +120,7 @@ function fillMessage(context, text, colour) {
 }
 
 const playerColour = Colour.hex('#72b1e5');
-const playerMaxRadius = 48;
+const playerRadius = 48;
 const playerSpeed = 600;
 const playerMaxHealth = 100;
 
@@ -130,7 +130,7 @@ const bulletSpeed = playerSpeed * 3;
 const bulletLifetime = 5; // important - prevents memory overflow
 
 const enemyColour = Colour.hex('#df7171');
-const enemyRadius = playerMaxRadius - 6;
+const enemyRadius = playerRadius - 6;
 const enemySpeed = playerSpeed / 3;
 const enemySpawnCooldown = 1;
 const enemySpawnDistance = 500;
@@ -418,7 +418,7 @@ class Player {
 
     render(context) {
         if (this.health > 0) {
-            fillCircle(context, this.pos, this.radius(), playerColour);
+            fillCircle(context, this.pos, playerRadius, playerColour);
         }
     }
 
@@ -426,16 +426,12 @@ class Player {
         this.pos = this.pos.add(vel.scale(dt));
     }
 
-    radius() {
-        return playerMaxRadius * (this.health / playerMaxHealth);
-    }
-
     shoot(target) {
         const bulletDir = target
             .sub(this.pos)
             .normalise();
         const bulletVel = bulletDir.scale(bulletSpeed);
-        const bulletPos = this.pos.add(bulletDir.scale(this.radius() + bulletRadius));
+        const bulletPos = this.pos.add(bulletDir.scale(playerRadius + bulletRadius));
 
         // Sfx
 
@@ -518,7 +514,7 @@ class Game {
             // Damage player
 
             if (this.player.health > 0 && !enemy.dead) {
-                if (enemy.pos.dist(this.player.pos) <= playerMaxRadius + enemyRadius) {
+                if (enemy.pos.dist(this.player.pos) <= playerRadius + enemyRadius) {
                     this.player.damage(enemyDamage);
                     if (this.player.health <= 0) {
                         globalFillFilter = grayScaleFilter;
