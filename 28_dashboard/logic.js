@@ -49,30 +49,36 @@ botContainer.textContent = 'Something Else...';
 bodyImage.append(botContainer);
 
 async function setBackgroundImage() {
-    // Get a random image
-    const data = await fetch('https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=minimal+nature');
-    const res = await data.json();
-    const backgroundImageSrc = `${res.urls.regular}`;
-    let backgroundImageAuthor = '';
+    try {
+        // Get a random image
+        const data = await fetch('https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=minimal+nature');
+        const res = await data.json();
+        // console.log(res.urls.regular);
+        // const backgroundImageSrc = `${res.urls.regular}`;
+        let backgroundImageAuthor = '';
 
-    if (res.user.last_name != null) {
-        backgroundImageAuthor = `Image by : ${res.user.first_name} ${res.user.last_name} `;
-    } else {
-        backgroundImageAuthor = `Image by : ${res.user.first_name}`;
+        if (res.user.last_name != null) {
+            backgroundImageAuthor = `Image by : ${res.user.first_name} ${res.user.last_name} `;
+        } else {
+            backgroundImageAuthor = `Image by : ${res.user.first_name}`;
+        }
+
+        // Set the body background to that image
+        bodyImage.style.backgroundImage = `url(${backgroundImageSrc})`;
+
+        // Show Image Author
+        function showImageAuthor() {
+            const imageAuthor = document.createElement('p');
+            imageAuthor.textContent = `${backgroundImageAuthor} `;
+            imageAuthor.setAttribute('id', 'image-author');
+            botContainer.append(imageAuthor);
+        }
+
+        showImageAuthor();
+    } catch (event) {
+        console.error('There was an error fetching the resource ->', event);
+        bodyImage.style.backgroundImage = `url(https://images.unsplash.com/photo-1556975603-548e36a3b0d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxNDI0NzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDQ2NTg3MTR8&ixlib=rb-4.0.3&q=80&w=1080)`;
     }
-
-    // Set the body background to that image
-    bodyImage.style.backgroundImage = `url(${backgroundImageSrc})`;
-
-    // Show Image Author
-    function showImageAuthor() {
-        const imageAuthor = document.createElement('p');
-        imageAuthor.textContent = `${backgroundImageAuthor} `;
-        imageAuthor.setAttribute('id', 'image-author');
-        botContainer.append(imageAuthor);
-    }
-
-    showImageAuthor();
 }
 
 setBackgroundImage();
