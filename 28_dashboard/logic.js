@@ -30,9 +30,10 @@ bodyWrapper.append(bodyImage);
 
 let topContainer = document.createElement('div');
 topContainer.setAttribute('id', 'top-container');
-let cryptoContent = document.createElement('p'); // replace this with something else
+let cryptoContent = document.createElement('div'); // replace this with something else
+cryptoContent.setAttribute('id', 'crypto-content');
 let weatherContent = document.createElement('p');
-cryptoContent.textContent = 'Crypto...';
+// cryptoContent.textContent = 'Crypto...';
 weatherContent.textContent = 'Weather...';
 topContainer.append(cryptoContent);
 topContainer.append(weatherContent);
@@ -49,12 +50,14 @@ botContainer.textContent = 'Something Else...';
 bodyImage.append(botContainer);
 
 async function setBackgroundImage() {
+    let backgroundImageSrc = undefined;
+
     try {
         // Get a random image
         const data = await fetch('https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=minimal+nature');
         const res = await data.json();
         // console.log(res.urls.regular);
-        // const backgroundImageSrc = `${res.urls.regular}`;
+        backgroundImageSrc = `${res.urls.regular}`;
         let backgroundImageAuthor = '';
 
         if (res.user.last_name != null) {
@@ -82,3 +85,47 @@ async function setBackgroundImage() {
 }
 
 setBackgroundImage();
+
+// Set crypto data
+
+fetch("https://api.coingecko.com/api/v3/coins/bitcoin")
+    .then(res => {
+        if (!res.ok) {
+            throw Error('Something went wrong.');
+        } else {
+            console.log(res.status);
+            return res.json();
+        }
+    })
+    .then(data => {
+        console.log(data);
+        let cryptoDetails = document.createElement('div');
+        cryptoDetails.setAttribute('id', 'crypto-details');
+        let cryptoIcon = document.createElement('img');
+        cryptoIcon.setAttribute('src', `${data.image.small}`);
+        cryptoIcon.setAttribute('id', 'crypto-icon');
+        let cryptoName = document.createElement('p');
+        cryptoName.textContent = data.name;
+        cryptoName.setAttribute('id', 'crypto-name');
+        let cryptoMarket = document.createElement('div');
+        cryptoMarket.innerHTML = `
+            <div id='current-price'>
+                <img class='data-icons' src='./assets/icons/current.png'>
+                <p>Current Price : £${data.market_data.current_price.gbp}</p>
+            </div>
+            <div id='up-price'>
+                <img class='data-icons' src='./assets/icons/up.png'>
+                <p>Market High : £${data.market_data.high_24h.gbp}</p>
+            </div>
+            <div id='down-price'>
+                <img class='data-icons' src='./assets/icons/down.png'>
+                <p>Market Low : £${data.market_data.low_24h.gbp}</p>
+            </div>
+        `;
+        cryptoMarket.setAttribute('id', 'market-data');
+        cryptoDetails.append(cryptoIcon);
+        cryptoDetails.append(cryptoName);
+        cryptoContent.append(cryptoDetails);
+        cryptoContent.append(cryptoMarket);
+    })
+    .catch(err => console.error(err));
