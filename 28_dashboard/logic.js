@@ -39,15 +39,22 @@ topContainer.append(cryptoContent);
 topContainer.append(weatherContent);
 bodyImage.append(topContainer);
 
+// Display time
+
+const rawTime = new Date();
+const formattedTime = rawTime.toLocaleString('en-UK', { hour: 'numeric', hour12: true, minute: 'numeric' });
+
 let midContainer = document.createElement('div');
 midContainer.setAttribute('id', 'mid-container');
-midContainer.textContent = '11:33';
+midContainer.textContent = formattedTime.toLocaleUpperCase();
 bodyImage.append(midContainer);
 
 let botContainer = document.createElement('div');
 botContainer.setAttribute('id', 'bot-container');
 botContainer.textContent = 'Something Else...';
 bodyImage.append(botContainer);
+
+// Set background image
 
 async function setBackgroundImage() {
     let backgroundImageSrc = undefined;
@@ -128,4 +135,4 @@ fetch("https://api.coingecko.com/api/v3/coins/bitcoin")
         cryptoContent.append(cryptoDetails);
         cryptoContent.append(cryptoMarket);
     })
-    .catch(err => console.error(err));
+    .catch(err => console.error(err)); // fetch error handling
