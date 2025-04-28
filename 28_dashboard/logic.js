@@ -41,12 +41,18 @@ bodyImage.append(topContainer);
 
 // Display time
 
-const rawTime = new Date();
-const formattedTime = rawTime.toLocaleString('en-UK', { hour: 'numeric', hour12: true, minute: 'numeric' });
+function updateTime() {
+    const rawTime = new Date();
+    const formattedTime = rawTime.toLocaleString('en-UK', { hour: 'numeric', hour12: true, minute: 'numeric' });
+    midContainer.textContent = formattedTime.toLocaleUpperCase();
+}
+
+// Update time every second
+
+setInterval(updateTime, 1000);
 
 let midContainer = document.createElement('div');
 midContainer.setAttribute('id', 'mid-container');
-midContainer.textContent = formattedTime.toLocaleUpperCase();
 bodyImage.append(midContainer);
 
 let botContainer = document.createElement('div');
