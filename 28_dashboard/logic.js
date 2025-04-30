@@ -32,9 +32,36 @@ let topContainer = document.createElement('div');
 topContainer.setAttribute('id', 'top-container');
 let cryptoContent = document.createElement('div'); // replace this with something else
 cryptoContent.setAttribute('id', 'crypto-content');
-let weatherContent = document.createElement('p');
-// cryptoContent.textContent = 'Crypto...';
-weatherContent.textContent = 'Weather...';
+
+let weatherContent = document.createElement('div');
+let weatherIcon = document.createElement('img');
+let weatherLocation = document.createElement('p');
+let weatherTemp = document.createElement('p');
+
+// Get Weather Info
+
+navigator.geolocation.getCurrentPosition(position => {
+    fetch(`https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial`)
+        .then(res => {
+            if (!res.ok) {
+                throw Error("Weather data not available");
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log(data);
+            weatherIcon.setAttribute('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+            weatherLocation.textContent = data.name;
+            weatherTemp.textContent = Math.ceil((data.main.temp - 32) * 5 / 9) + '°C'; // to Celsius
+            console.log(weatherTemp);
+        })
+        .catch(err => console.error(err));
+});
+
+weatherContent.append(weatherIcon);
+weatherContent.append(weatherLocation);
+weatherContent.append(weatherTemp);
+
 topContainer.append(cryptoContent);
 topContainer.append(weatherContent);
 bodyImage.append(topContainer);
