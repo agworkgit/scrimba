@@ -13,9 +13,13 @@ body {
 #body-image {
     height: 100vh;
     background: rgba(0, 0, 0, 0.35) no-repeat center center fixed;
+    /*     
+    No longer required, only present in old code bases
     -webkit-background-size: cover;
     -moz-background-size: cover;
-    -o-background-size: cover;
+    -o-background-size: cover; 
+*/
+
     background-size: cover;
     background-blend-mode: overlay;
     display: flex;
