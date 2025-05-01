@@ -90,7 +90,7 @@ bodyImage.append(midContainer);
 
 let botContainer = document.createElement('div');
 botContainer.setAttribute('id', 'bot-container');
-botContainer.textContent = 'Something Else...';
+// botContainer.textContent = 'Something Else...';
 bodyImage.append(botContainer);
 
 // Set background image

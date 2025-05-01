@@ -40,7 +40,7 @@ body {
 
 #mid-container {
     justify-content: center;
-    font-size: 6rem;
+    font-size: 10vh;
     align-items: center;
 }
 
@@ -110,4 +110,8 @@ body {
 
 #weather-temp-text {
     font-size: 3rem;
+}
+
+#image-author {
+    text-align: center;
 }
