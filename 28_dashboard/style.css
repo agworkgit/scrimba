@@ -90,3 +90,24 @@ body {
 .data-icons {
     width: 7.5%;
 }
+
+#weather-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+
+#weather-icon {
+    width: 75px;
+}
+
+#weather-temp-icon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#weather-temp-text {
+    font-size: 3rem;
+}

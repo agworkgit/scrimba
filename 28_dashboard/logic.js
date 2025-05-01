@@ -34,9 +34,14 @@ let cryptoContent = document.createElement('div'); // replace this with somethin
 cryptoContent.setAttribute('id', 'crypto-content');
 
 let weatherContent = document.createElement('div');
+weatherContent.setAttribute('id', 'weather-content');
+let weatherTempIcon = document.createElement('div');
+weatherTempIcon.setAttribute('id', 'weather-temp-icon');
 let weatherIcon = document.createElement('img');
-let weatherLocation = document.createElement('p');
+weatherIcon.setAttribute('id', 'weather-icon');
 let weatherTemp = document.createElement('p');
+weatherTemp.setAttribute('id', 'weather-temp-text');
+let weatherLocation = document.createElement('p');
 
 // Get Weather Info
 
@@ -52,15 +57,16 @@ navigator.geolocation.getCurrentPosition(position => {
             console.log(data);
             weatherIcon.setAttribute('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
             weatherLocation.textContent = data.name;
-            weatherTemp.textContent = Math.ceil((data.main.temp - 32) * 5 / 9) + '°C'; // to Celsius
+            weatherTemp.textContent = Math.ceil((data.main.temp - 32) * 5 / 9) + '°'; // to Celsius
             console.log(weatherTemp);
         })
         .catch(err => console.error(err));
 });
 
-weatherContent.append(weatherIcon);
+weatherTempIcon.append(weatherIcon);
+weatherTempIcon.append(weatherTemp);
+weatherContent.append(weatherTempIcon);
 weatherContent.append(weatherLocation);
-weatherContent.append(weatherTemp);
 
 topContainer.append(cryptoContent);
 topContainer.append(weatherContent);
