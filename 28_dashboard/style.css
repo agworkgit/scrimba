@@ -96,6 +96,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: end;
+    margin-top: -50px;
 }
 
 #weather-icon {
@@ -110,6 +111,10 @@ body {
 
 #weather-temp-text {
     font-size: 3rem;
+}
+
+#weather-loc {
+    margin-top: -15px;
 }
 
 #image-author {

@@ -42,6 +42,7 @@ weatherIcon.setAttribute('id', 'weather-icon');
 let weatherTemp = document.createElement('p');
 weatherTemp.setAttribute('id', 'weather-temp-text');
 let weatherLocation = document.createElement('p');
+weatherLocation.setAttribute('id', 'weather-loc');
 
 // Get Weather Info
 
