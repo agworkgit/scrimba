@@ -2,6 +2,15 @@
 
 Notes and projects from the Scrimba Frontend Path, and extra-curricular activities surrounding the same topics studied.
 
+## Project 28
+
+A momento style dashboard that integrates image, crypto and weather API data.
+
+![preview image](28_dashboard/assets/preview/preview.png)
+
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/28_dashboard)<br>
+[To see the project in action click here](https://agmomentodash.netlify.app/)
+
 ## Project 27 (Solo Project)
 
 A fully responsive movie search portal with a watchlist:
