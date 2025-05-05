@@ -131,16 +131,16 @@ A unit conversion utility app:
 
 A blackjack web based game:
 
-![preview image](8_blackjack/assets/preview.jpg)
+![preview image](08_blackjack/assets/preview.jpg)
 
-[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/8_blackjack)<br>
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/08_blackjack)<br>
 [To see the project in action click here](https://agblackjack.netlify.app/)
 
 ## Project 2
 
 A landing page for a space exploration company:
 
-![preview image](2_space_exploration/assets/preview.jpg)
+![preview image](02_space_exploration/assets/preview.jpg)
 
-[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/2_space_exploration)<br>
+[To see the project code click here](https://github.com/agworkgit/scrimba/tree/main/02_space_exploration)<br>
 [To see the project in action click here](https://spaceex-gif.netlify.app/)
