@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    background: #303030;
+    color: #ffffee;
+}
+
+div {
+    margin-left: 2rem;
+    margin-top: 4rem;
+}
+
+svg {
+    width: 5%;
+    margin-bottom: 3rem;
+}
+
+h1 {
+    font-size: 3rem;
+    padding-bottom: 1.5rem;
+}
+
+ul {
+    padding-left: 1.5rem;
+    font-size: 1.5rem;
+    list-style: disc;
+}
+
+li {
+    padding-bottom: 0.75rem;
+}
