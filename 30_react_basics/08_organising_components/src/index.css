@@ -22,13 +22,25 @@ h1 {
     padding-bottom: 1.5rem;
 }
 
-ol {
-    padding-left: 1.75rem;
+.fact-list {
+    padding-left: 0.5rem;
     font-size: 1.5rem;
 }
 
-li {
+.fact-item {
     padding-bottom: 0.75rem;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.fact-item::before {
+    content: '';
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: rgb(88, 196, 220);
+    margin-right: 1rem;
 }
 
 footer {
@@ -91,6 +103,10 @@ footer {
 
 .main-content {
     padding: 2rem;
+}
+
+main {
+    background-image: url('');
 }
 
 .footer {
