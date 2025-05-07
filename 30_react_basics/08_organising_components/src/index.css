@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
     background: #303030;
     color: #ffffee;
     position: relative;
@@ -13,8 +13,8 @@ body {
 }
 
 svg {
-    width: 3%;
-    height: 3%;
+    width: 48px;
+    height: 48px;
 }
 
 h1 {
@@ -51,6 +51,19 @@ footer {
     background: #404040;
     color: rgb(88, 196, 220);
     border-bottom: 1px solid rgba(88, 196, 220, 0.25);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logo span {
+    padding: 0;
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 400;
 }
 
 .menu-list {

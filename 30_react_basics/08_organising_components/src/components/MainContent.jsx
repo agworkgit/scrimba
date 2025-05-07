@@ -1,4 +1,4 @@
-export function MainContent() {
+export default function MainContent() {
     return (
         <main className='main-content'>
             <h1>Reasons I'm excited to learn React</h1>
