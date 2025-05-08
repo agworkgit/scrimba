@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #eeeeee;
+}
+
+header {
+    background: rgb(222, 78, 78);
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-title {
+    font-size: 1rem;
+    text-align: center;
+    color: white;
+}
+
+.globe-icon {
+    width: 32px;
+    filter: invert(1);
+}
+
+.entry-container {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+}
+
+.entry-image {
+    display: flex;
+    min-width: 128px;
+    height: 256;
+    background: url('https://cdn.britannica.com/03/75503-050-F65891FA/volcanic-cone-Japan-Mount-Fuji.jpg');
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+.entry-details {
+    flex-grow: 1;
+}
+
+.entry-title {
+    font-size: 2rem;
+    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+    margin: 0;
+}
+
+.entry-marker {
+    display: flex;
+    gap: 0.25rem;
+    align-content: center;
+    width: 100%;
+}
+
+.entry-location {
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+}
+
+.entry-marker a {
+    color: grey;
+    font-size: 0.75rem;
+    margin: 0;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.marker-icon {
+    height: 16px;
+}
+
+.entry-dates {
+    font-weight: 800;
+    font-size: 0.75rem;
+}
+
+.entry-para {
+    font-size: 0.75rem;
+    margin: 0;
+    padding-top: 0.25rem;
+    line-height: 1.25rem;
+}
+
+.entry-border {
+    margin: 0 1rem;
+    padding: 0;
+    width: auto;
+    height: 1px;
+    background-color: rgb(205, 205, 205);
+}
