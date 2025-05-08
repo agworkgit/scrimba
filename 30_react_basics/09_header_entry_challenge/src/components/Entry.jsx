@@ -16,10 +16,10 @@
 
 export default function Entry() {
     return (
-        <main>
+        <article>
             <div className='entry-container'>
                 <div className='entry-image'></div>
-                <section className='entry-details'>
+                <div className='entry-details'>
                     <div className='entry-marker'>
                         <img
                             src='./src/assets/gps.png'
@@ -40,9 +40,9 @@ export default function Entry() {
                         most popular tourist site in Japan, for both Japanese
                         and foreign tourists.
                     </p>
-                </section>
+                </div>
             </div>
             <div className='entry-border'></div>
-        </main>
+        </article>
     );
 }
