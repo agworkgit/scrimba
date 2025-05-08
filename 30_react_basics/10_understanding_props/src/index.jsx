@@ -1,8 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import Map from './components/Map';
-import Arrays from './components/ReactAndArrays';
-import MapComp from './components/MappingComponents';
+import catData from './data/catData';
+
 import Header from './components/Header';
 import Entry from './components/Entry';
 
@@ -12,7 +11,11 @@ createRoot(document.getElementById('root')).render(
         {/* <Arrays /> */}
         {/* <MapComp /> */}
         <Header />
-        <Entry />
-        <Entry />
+        <Entry
+            img={catData.image}
+            name={catData.name}
+            phone={catData.phone}
+            email={catData.email}
+        />
     </>
 );

@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #eeeeee;
+}
+
+header {
+    background: rgb(0, 25, 139);
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-title {
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    color: white;
+}
+
+.globe-icon {
+    width: 32px;
+    filter: invert(1);
+}
+
+.entry-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-wrapper {
+    max-width: 50%;
+    padding: 1rem;
+}
+
+.card {
+    display: flex;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px 3px rgba(0, 25, 139, 0.1);
+}
+
+.card-details {
+    padding: 0rem 1rem 0rem 1rem;
+    letter-spacing: 0.05rem;
+}
+
+.card-info {
+    font-weight: 800;
+    font-size: 0.75rem;
+}
+
+.card-description {
+    padding: 1rem 0rem 0rem 0rem;
+    font-size: 0.75rem;
+}
+
+.card-image-wrapper {
+    display: flex;
+    max-height: 200px;
+    min-width: 150px;
+}
+
+.card-image {
+    max-width: 150px;
+    min-height: 200px;
+    background-position: center;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 800;
+    display: block;
+    padding-bottom: 1rem;
+    margin: -5px 0 0 0;
+    color: rgb(0, 25, 139);
+}
+
+@media (max-width: 415px) {
+    .card-wrapper {
+        max-width: 100%;
+        padding: 1rem;
+    }
+}
