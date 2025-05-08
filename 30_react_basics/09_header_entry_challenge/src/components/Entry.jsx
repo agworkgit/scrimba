@@ -30,7 +30,7 @@ export default function Entry() {
                             View on Google Maps
                         </a>
                     </div>
-                    <span className='entry-title'>Mount Fuji</span>
+                    <h2 className='entry-title'>Mount Fuji</h2>
                     <span className='entry-dates'>
                         12 Jan, 2021 - 24 Jan, 2021
                     </span>
