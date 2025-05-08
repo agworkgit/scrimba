@@ -36,7 +36,7 @@ nav {
 .entry-container {
     display: flex;
     gap: 1rem;
-    padding: 1rem;
+    padding: 5%;
     width: 100%;
 }
 
@@ -104,7 +104,7 @@ nav {
 }
 
 .entry-border {
-    margin: 0 1rem;
+    margin: 0 5%;
     padding: 0;
     width: auto;
     height: 1px;
