@@ -1,3 +1,9 @@
+// Resources
+
+import chefClaudeIcon from '/src/assets/icons/chef-claude-icon.png';
+
+// Current Component
+
 export default function Header() {
     return (
         <>
@@ -5,7 +11,7 @@ export default function Header() {
                 <nav>
                     <img
                         className='header-icon'
-                        src='./src/assets/icons/chef-claude-icon.png'
+                        src={chefClaudeIcon}
                         alt='Chef Claude icon'
                     />
                     <span className='header-title'>Chef Claude</span>

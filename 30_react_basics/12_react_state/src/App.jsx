@@ -2,17 +2,23 @@
 
 import './style/App.css';
 import './style/Header.css';
+import './style/Form.css';
 
-// Components
+// Imported Components
 
 import Header from './components/Header';
+import Main from './components/Main';
+import Form from './components/Form';
 
-// App
+// Current Component
 
 export default function App() {
     return (
         <>
             <Header />
+            <Main>
+                <Form />
+            </Main>
         </>
     );
 }
