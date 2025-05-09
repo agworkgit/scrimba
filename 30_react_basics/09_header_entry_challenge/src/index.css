@@ -37,25 +37,30 @@ nav {
     display: flex;
     gap: 1rem;
     padding: 5%;
-    width: 100%;
+    width: 100vw;
 }
 
-.entry-image {
+.card-image-wrapper {
     display: flex;
-    min-width: 150px;
-    min-height: 250px;
-    background: url('https://cdn.britannica.com/03/75503-050-F65891FA/volcanic-cone-Japan-Mount-Fuji.jpg');
+    max-height: 300px;
+    min-width: 250px;
+}
+
+.card-image {
+    min-height: 300px;
+    max-width: 250px;
     background-position: center;
-    background-size: cover;
+    object-fit: cover;
     border-radius: 10px;
 }
 
 .entry-details {
     flex-grow: 1;
+    padding-left: 2.5%;
 }
 
 .entry-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
     display: block;
     padding-bottom: 1rem;
@@ -114,5 +119,15 @@ nav {
 @media (max-width: 415px) {
     .entry-marker a {
         text-align: left;
+    }
+
+    .card-image-wrapper {
+        max-height: 200px;
+        min-width: 150px;
+    }
+
+    .card-image {
+        min-height: 200px;
+        max-width: 150px;
     }
 }

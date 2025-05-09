@@ -1,8 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import './index.css';
+
 import Map from './components/Map';
 import Arrays from './components/ReactAndArrays';
-import MapComp from './components/MappingComponents';
+import MappedEntry from './components/MappingComponents';
+
 import Header from './components/Header';
 import Entry from './components/Entry';
 
@@ -12,7 +14,6 @@ createRoot(document.getElementById('root')).render(
         {/* <Arrays /> */}
         {/* <MapComp /> */}
         <Header />
-        <Entry />
-        <Entry />
+        <MappedEntry />
     </>
 );
