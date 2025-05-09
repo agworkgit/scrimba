@@ -6,12 +6,8 @@ export default function MappedEntry() {
         return (
             <Entry
                 key={item.id}
-                img={item.img}
-                title={item.title}
-                country={item.country}
-                googleMapsLink={item.googleMapsLink}
-                dates={item.dates}
-                text={item.text}
+                // React property spread operator, same as writing named props i.e img={item.img} etc... but more concise
+                {...item}
             />
         );
     });
