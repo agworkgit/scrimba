@@ -1,0 +1,334 @@
+:root {
+    /* Default Colours */
+    --background-col: #101010;
+    --prim-text-col: #ffffff;
+    --sec-text-col: #dcdcdc;
+    --bg-text-col: #3f3f3f;
+    --borders-col: #777777;
+    --btn-col: #797979;
+    --btn-hov-col: #969696;
+    --placeholder-col: #969696;
+    --search-col: #535353;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--background-col);
+    color: var(--prim-text-col);
+}
+
+#banner {
+    background: var(--background-col) url('./assets/images/banner-image.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 208px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 3rem;
+    color: #ffffff;
+    position: relative;
+}
+
+#banner-title {
+    font-size: 3rem;
+    font-weight: bolder;
+}
+
+#watchlist-btn {
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    font-size: 1rem;
+    border: 1px solid #ffffff;
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+#watchlist-btn:hover {
+    background: rgba(200, 200, 200, 0.25);
+}
+
+#search {
+    display: flex;
+    background: var(--search-col);
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 11.75rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    height: 3rem;
+    border: 1px solid var(--borders-col);
+    border-radius: 2rem;
+    margin-inline: 3rem;
+    overflow: clip;
+}
+
+#search-icon {
+    height: 1rem;
+    padding-inline: 1.5rem;
+}
+
+#search-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: var(--search-col);
+    color: var(--prim-text-col);
+    border-right: 1px solid var(--borders-col);
+    text-align: left;
+    font-size: 1rem;
+    padding-inline: 1rem;
+}
+
+#search-input:focus,
+#search-input:active {
+    outline: none;
+    background: var(--search-col) !important;
+}
+
+/* Change Autofill Style */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+input:-webkit-autofill::first-line {
+    border: none;
+    font-size: 1rem !important;
+    -webkit-text-fill-color: var(--btn-col);
+    -webkit-box-shadow: 0 0 0px 1000px var(--search-col) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+#search-btn {
+    width: 10rem;
+    height: 100%;
+    border: none;
+    padding-inline: 1rem;
+    cursor: pointer;
+    color: #ffffff;
+    background: var(--btn-col);
+    font-size: 1rem;
+}
+
+#search-btn:hover {
+    background: var(--btn-hov-col);
+}
+
+#start-page-tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 9rem auto auto auto;
+}
+
+#tooltip-slogan {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--bg-text-col);
+    cursor: default;
+}
+
+#tooltip-img {
+    width: 6rem;
+    margin: 0 auto;
+}
+
+#listing-intro {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.watch-listing {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding-left: 1rem;
+}
+
+/* new */
+
+#movie-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+#listing-wrapper {
+    display: flex;
+    align-items: center;
+    padding-block: 3rem;
+    width: calc(100% - 6rem);
+    margin: 0 auto;
+    border-bottom: 1px solid var(--borders-col);
+}
+
+#listing-wrapper:first-child {
+    padding-top: 4rem;
+}
+
+#image-wrapper {
+    display: flex;
+    justify-content: center;
+    background-size: cover;
+    border: 1px solid var(--borders-col);
+    border-radius: 0.5rem;
+}
+
+#listing-image {
+    border-radius: 0.5rem;
+    max-width: calc(99px * 2);
+    max-height: calc(147.41px * 2);
+}
+
+#info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 3rem;
+}
+
+#listing-highlight {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#listing-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
+
+#listing-title {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+#listing-rating {
+    font-size: 1rem;
+    font-weight: 100;
+}
+
+#listing-star {
+    width: 1.25rem;
+}
+
+#listing-duration,
+#listing-genres {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+#listing-plot {
+    font-size: 1.25rem;
+    font-weight: 200;
+    color: var(--sec-text-col);
+}
+
+.cut-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: calc(100vw - 6rem);
+    height: fit-content;
+    white-space: wrap;
+}
+
+/* Watchlist Page Styles */
+
+#remove-btn,
+#watchlist-add {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--btn-col);
+    color: var(--text-col);
+    border: none;
+    border: 1px solid var(--borders-col);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+#remove-btn:hover,
+#watchlist-add:hover {
+    background: var(--btn-hov-col);
+    border-radius: 0.5rem;
+}
+
+#plus-icon,
+#minus-icon {
+    width: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    #movie-list {
+        justify-content: center;
+        align-items: center;
+    }
+
+    #listing-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 3rem 1rem;
+    }
+
+    #tooltip-slogan {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    #tooltip-img {
+        width: 3rem;
+    }
+
+    #banner {
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    #banner-title {
+        font-size: 1.75rem;
+    }
+
+    #watchlist-btn {
+        font-size: 0.75rem;
+        text-align: center;
+    }
+
+    #search {
+        margin-inline: 1rem;
+    }
+
+    #search-input,
+    #search-btn,
+    #watchlist-add,
+    #remove-btn {
+        font-size: 0.75rem;
+    }
+}

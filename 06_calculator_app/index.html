@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <h1 id='app-title'>MATH CALCULATOR</h1>
+    <div id='calc-wrapper'>
+        <h2 id='tooltip'>Input numbers below:</h2>
+        <div id='input-container'>
+            <input id="num1-el"></input>
+            <input id="num2-el"></input>
+        </div>
+        <br>
+        <div id='operations'>
+            <button onclick="add()">Add</button>
+            <button onclick="subtract()">Subtract</button>
+            <button onclick="divide()">Divide</button>
+            <button onclick="multiply()">Multiply</button>
+        </div>
+        <br>
+        <p id='sum-wrapper'>Total: <span id="sum-el">0</span></p>
+    </div>
+</body>
+
+</html>

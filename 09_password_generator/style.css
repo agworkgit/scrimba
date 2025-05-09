@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    font-family: 'Funnel Display', sans-serif;
+}
+
+/* body {
+    background: rgb(2, 2, 2);
+} */
+
+body {
+    background: #1f2937;
+    min-width: 450px;
+    min-height: 450px;
+    margin: 0px auto;
+    padding: 50px;
+}
+
+#title-text {
+    color: white;
+    font-size: 40px;
+    font-weight: 500;
+}
+
+#highlight-text {
+    color: #4adf86;
+}
+
+#para-text {
+    margin-block: 10px;
+    font-size: 20px;
+    font-weight: 100;
+    color: #d5d4d8;
+}
+
+.primary-btn {
+    color: #1f2937;
+    background: #10b981;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-block: 50px;
+}
+
+.primary-btn:hover {
+    background: #35e0a7;
+}
+
+.primary-btn:active {
+    transform: scale(0.99);
+}
+
+#separator {
+    width: 100%;
+    height: 1px;
+    background: #2f3e53;
+}
+
+#outputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 35px;
+}
+
+.password-style {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 215px;
+    height: 45px;
+    background: #273549;
+    border-radius: 5px;
+    color: #10b981;
+    overflow: hidden;
+}
+
+#password-1,
+#password-2 {
+    font-size: 14px;
+    width: 80%;
+    text-align: center;
+}
+
+.clipboards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    background-color: #10b981;
+}
+
+#paste-logo {
+    width: 24px;
+    /* filter: invert(); */
+    cursor: pointer;
+}
+
+.clipboards:hover {
+    background: #35e0a7;
+}
+
+#paste-logo:active {
+    transform: scale(0.95);
+}

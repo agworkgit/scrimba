@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <script src='./script.js' defer></script>
+</head>
+
+<body>
+    <h1>Blackjack</h1>
+    <div id='game-container'>
+        <img id='top-banner' src="./images/aces.jpg" alt="A set of aces from a deck of playing cards">
+        <div id='controls'>
+            <p id="message-el">Want to play a round? Click START GAME below.</p>
+            <div id='button-wrapper'>
+                <button id='start-continue' onclick="startGame()">START GAME</button>
+                <button onclick="newCard()">NEW CARD</button>
+            </div>
+            <p id="cards-el">Your Hand :</p>
+            <p id="sum-wrapper"><span id="sum-title">Card Sum</span><span id="sum-el"></span></p>
+        </div>
+    </div>
+    <p id="player-el"></p>
+</body>
+
+</html>
