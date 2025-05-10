@@ -3,6 +3,7 @@
 import './style/App.css';
 import './style/Header.css';
 import './style/Form.css';
+import './style/Ingredients.css';
 
 // Imported Components
 
