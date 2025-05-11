@@ -28,6 +28,7 @@ span {
 
 .ingredients-item {
     font-size: 1rem;
+    font-weight: 300;
     padding: 0;
     margin-left: 1rem;
 }
@@ -38,5 +39,13 @@ span {
     .ingredients-list {
         padding-block: 1.25rem;
         padding-inline: 0.75rem;
+    }
+
+    .ingredients-title {
+        font-size: 1.75rem;
+    }
+
+    .ingredients-item {
+        font-size: 0.75rem;
     }
 }
