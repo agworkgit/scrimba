@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    font-family: 'Funnel Display', sans-serif;
+}
+
+body {
+    padding: 10px;
+    min-width: 400px;
+    max-width: 400px;
+    background: rgb(17, 17, 17);
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 50px;
+}
+
+button {
+    font-family: 'Funnel Display', sans-serif;
+    font-weight: 500;
+    background: #1845d8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    width: 100%;
+}
+
+button:hover {
+    background: #4464ce;
+}
+
+#banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 10px auto;
+}
+
+#ext-title {
+    color: #ffffff;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    width: 70%;
+}
+
+#input-logo {
+    display: flex;
+    justify-content: end;
+    width: 10%;
+}
+
+#btn-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+#separator {
+    width: 100%;
+    height: 1px;
+    background: rgb(17, 17, 17);
+    margin: 15px auto 15px auto;
+}
+
+#tooltip {
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    padding-inline: 10px;
+    text-align: center;
+}
+
+ul {
+    background: #afbbe1;
+    margin: 10px auto 0px auto;
+    padding: 15px 0px 0px 0px;
+    list-style: none;
+    border-radius: 18px;
+}
+
+li {
+    text-align: center;
+}
+
+a {
+    color: #1845d8;
+}
+
+a:hover {
+    color: #4464ce;
+}
